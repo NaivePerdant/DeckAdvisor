@@ -1,0 +1,6 @@
+{
+  "Name": "DeckAdvisor",
+  "Version": "1.0.0",
+  "Description": "Shows a score overlay on card reward choices based on your current deck.",
+  "Dependencies": ["BaseLib"]
+}
