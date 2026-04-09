@@ -52,7 +52,6 @@ if not "%GODOT_EXE%"=="" (
 
 :: Copy manifest
 copy /y "%SCRIPT_DIR%%MOD_NAME%.json" "%SCRIPT_DIR%dist\%MOD_NAME%\" >nul
-copy /y "%SCRIPT_DIR%mod_manifest.json" "%SCRIPT_DIR%dist\%MOD_NAME%\" >nul
 
 :: Deploy
 if exist "%MODS_DIR%" (
