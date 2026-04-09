@@ -1,11 +1,7 @@
 {
-  "id": "DeckAdvisor",
+  "pck_name": "DeckAdvisor",
   "name": "DeckAdvisor",
   "author": "NaivePerdant",
   "description": "Shows a score overlay on card reward choices based on your current deck.",
-  "version": "1.0.0",
-  "has_pck": false,
-  "has_dll": true,
-  "dependencies": ["BaseLib"],
-  "affects_gameplay": false
+  "version": "1.0.0"
 }
