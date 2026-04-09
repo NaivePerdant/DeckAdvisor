@@ -37,7 +37,7 @@ public static class CardScorer
         if (card.Type == CardType.Power)                      s += 1f;
 
         // Penalize high-cost cards in small decks
-        if (deck.Count < 15 && (int)card.EnergyCost >= 3) s -= 1f;
+        if (deck.Count < 15 && card.EnergyCost.Canonical >= 3) s -= 1f;
 
         return Math.Clamp(s, 0f, 10f);
     }
