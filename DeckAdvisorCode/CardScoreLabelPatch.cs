@@ -1,15 +1,15 @@
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 
 namespace DeckAdvisor.DeckAdvisorCode;
 
-[HarmonyPatch(typeof(NCard), "Reload")]
+[HarmonyPatch(typeof(NCard), nameof(NCard.UpdateVisuals))]
 public static class CardScoreLabelPatch
 {
     static void Postfix(NCard __instance)
     {
-        // Remove any existing score label from a previous Reload
         __instance.GetNodeOrNull<Label>("_DeckAdvisorScore")?.QueueFree();
 
         var model = __instance.Model;
@@ -20,7 +20,6 @@ public static class CardScoreLabelPatch
         {
             Name = "_DeckAdvisorScore",
             Text = $"{result.grade}  {result.score:F1}",
-            // TODO: adjust position after seeing it in-game
             Position = new Vector2(10f, 10f),
             ZIndex = 10,
         };
@@ -31,10 +30,10 @@ public static class CardScoreLabelPatch
     }
 
     static Color GradeColor(string grade) => grade switch {
-        "S" => new Color(1f, 0.84f, 0f),    // gold
-        "A" => new Color(0.4f, 1f, 0.4f),   // green
-        "B" => new Color(0.4f, 0.8f, 1f),   // blue
-        "C" => new Color(1f, 1f, 1f),        // white
-        _   => new Color(0.6f, 0.6f, 0.6f), // gray
+        "S" => new Color(1f, 0.84f, 0f),
+        "A" => new Color(0.4f, 1f, 0.4f),
+        "B" => new Color(0.4f, 0.8f, 1f),
+        "C" => new Color(1f, 1f, 1f),
+        _   => new Color(0.6f, 0.6f, 0.6f),
     };
 }
