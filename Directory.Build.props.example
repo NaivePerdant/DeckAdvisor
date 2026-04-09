@@ -1,7 +1,8 @@
 <Project>
     <PropertyGroup>
         <!-- Path to Godot 4.5.1 Mono executable (required for .pck export) -->
-        <!-- macOS example: <GodotPath>/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath> -->
+        <!-- macOS:   <GodotPath>/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath> -->
+        <!-- Windows: <GodotPath>C:\Godot\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64.exe</GodotPath> -->
         <GodotPath></GodotPath>
 
         <!-- Uncomment and set if STS2 is not auto-detected -->
