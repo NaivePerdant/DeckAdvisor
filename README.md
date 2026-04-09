@@ -10,7 +10,11 @@
 
 ## 配置
 
-编辑 `Directory.Build.props`，填入 Godot 路径：
+复制模板文件并填入 Godot 路径：
+
+```bash
+cp Directory.Build.props.example Directory.Build.props
+```
 
 ```xml
 <GodotPath>/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>

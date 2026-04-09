@@ -1,0 +1,10 @@
+<Project>
+    <PropertyGroup>
+        <!-- Path to Godot 4.5.1 Mono executable (required for .pck export) -->
+        <!-- macOS example: <GodotPath>/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath> -->
+        <GodotPath></GodotPath>
+
+        <!-- Uncomment and set if STS2 is not auto-detected -->
+        <!-- <Sts2Path>/path/to/steamapps/common/Slay the Spire 2</Sts2Path> -->
+    </PropertyGroup>
+</Project>
