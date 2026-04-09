@@ -14,7 +14,12 @@ public static class CardScoreLabelPatch
 
         var model = __instance.Model;
         if (model == null || !CardScorer.Current.TryGetValue(model.Id, out var result))
+        {
+            MainFile.Logger.Info($"DeckAdvisor: UpdateVisuals called, model={(model == null ? "null" : model.Id.ToString())}, score found={model != null && CardScorer.Current.ContainsKey(model.Id)}");
             return;
+        }
+
+        MainFile.Logger.Info($"DeckAdvisor: Adding score label {result.grade} {result.score:F1} to card {model.Id}");
 
         var label = new Label
         {

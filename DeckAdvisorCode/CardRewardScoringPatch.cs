@@ -16,6 +16,7 @@ public static class CardRewardScoringPatch
 {
     static void Prefix(PlayerChoiceContext context, IReadOnlyList<CardModel> cards, Player player)
     {
+        MainFile.Logger.Info($"DeckAdvisor: Evaluating {cards.Count} cards.");
         CardScorer.Evaluate(player, cards);
     }
 }

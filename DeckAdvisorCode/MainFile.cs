@@ -14,5 +14,6 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         new Harmony(ModId).PatchAll();
+        Logger.Info("DeckAdvisor initialized, patches applied.");
     }
 }
