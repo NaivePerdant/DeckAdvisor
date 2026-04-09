@@ -1,60 +1,60 @@
 # DeckAdvisor
 
-A mod for Slay the Spire 2 that scores cards during reward and deck-building screens.
+《杀戮尖塔 2》Mod，在卡牌奖励和牌组构建界面为卡牌评分。
 
-## Prerequisites
+## 前置要求
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- [Godot 4.5.1 Mono](https://godotengine.org/download) — required for `.pck` export
-- Slay the Spire 2 installed via Steam
+- [Godot 4.5.1 Mono](https://godotengine.org/download) — 用于导出 `.pck` 文件
+- 通过 Steam 安装的《杀戮尖塔 2》
 
-## Setup
+## 配置
 
-Edit `Directory.Build.props` to set your Godot path:
+编辑 `Directory.Build.props`，填入 Godot 路径：
 
 ```xml
 <GodotPath>/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>
 ```
 
-STS2 is auto-detected from the default Steam library. If it's in a custom location, also set:
+游戏路径会从默认 Steam 库自动检测。如果安装在自定义位置，还需设置：
 
 ```xml
 <Sts2Path>/path/to/steamapps/common/Slay the Spire 2</Sts2Path>
 ```
 
-## Build & Deploy
+## 构建与部署
 
-**macOS / Linux:**
+**macOS / Linux：**
 
 ```bash
 ./build.sh
 ```
 
-If STS2 is not auto-detected:
+如果游戏路径未能自动检测：
 
 ```bash
 ./build.sh --sts2-path "/path/to/Slay the Spire 2"
 ```
 
-**Windows:**
+**Windows：**
 
 ```bat
 build.bat
 ```
 
-The script compiles the `.dll`, exports the `.pck` via Godot, and copies everything to the game's `mods/DeckAdvisor/` folder.
+脚本会自动编译 `.dll`、用 Godot 导出 `.pck`，并将所有文件复制到游戏的 `mods/DeckAdvisor/` 目录。
 
-## Manual Build
+## 手动构建
 
 ```bash
 dotnet publish -c Release
 ```
 
-Then copy `DeckAdvisor.dll`, `DeckAdvisor.json`, and `DeckAdvisor.pck` to:
+然后将 `DeckAdvisor.dll`、`DeckAdvisor.json`、`DeckAdvisor.pck` 复制到对应目录：
 
-| Platform | Mods folder |
-|----------|-------------|
+| 平台 | Mods 目录 |
+|------|-----------|
 | Windows / Linux | `<STS2>/mods/DeckAdvisor/` |
 | macOS | `<STS2>/SlayTheSpire2.app/Contents/MacOS/mods/DeckAdvisor/` |
 
-Enable the mod in the game's mod list and restart.
+在游戏 Mod 列表中启用 DeckAdvisor 后重启游戏即可。
