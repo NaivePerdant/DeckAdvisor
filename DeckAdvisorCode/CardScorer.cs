@@ -128,6 +128,10 @@ public static class CardScorer
         ["Rupture"]      = [( new(){"Offering","Bloodletting","CrimsonMantle","BloodWall","Hemokinesis","Breakthrough","DemonicShield","TearAsunder","Conflagration"}, 1.5f )],
         // 自残体系：有扯碎(TearAsunder)时，失血源价值提升
         ["TearAsunder"]  = [( new(){"Offering","Bloodletting","CrimsonMantle","Rupture","BloodWall","Hemokinesis"}, 1.5f )],
+        // 自残体系：有失血源时，扯碎和撕裂价值提升
+        ["Bloodletting"] = [( new(){"TearAsunder","Rupture","Conflagration"}, 1.0f )],
+        ["BloodWall"]    = [( new(){"TearAsunder","Rupture"}, 1.0f )],
+        ["Hemokinesis"]  = [( new(){"TearAsunder","Rupture"}, 1.0f )],
         // 焚烧(Conflagration)：本回合打出攻击牌越多伤害越高，多攻击牌时价值提升
         ["Conflagration"]= [( new(){"PommelStrike","Whirlwind","TwinStrike","SwordBoomerang","Thrash","Dismantle"}, 1.0f )],
         // 格挡体系：壁垒和全身撞击互相依赖
@@ -162,8 +166,8 @@ public static class CardScorer
         int exhaustCount  = deckNames.Count(n => ExhaustCards.Contains(n));
         int blockCount    = deckNames.Count(n => BlockCards.Contains(n));
 
-        // 自残流：有撕裂或绯红披风，且有失血源
-        bool isBleedBuild   = (hasRupture || hasCrimson) && selfDmgCount >= 1;
+        // 自残流：有≥2张失血源，或有撕裂/绯红披风+≥1张失血源
+        bool isBleedBuild   = selfDmgCount >= 2 || ((hasRupture || hasCrimson) && selfDmgCount >= 1);
         bool isVulnBuild    = vulnCount >= 2;
         bool isExhaustBuild = exhaustCount >= 2;
         bool isBlockBuild   = blockCount >= 2;
@@ -195,7 +199,7 @@ public static class CardScorer
             int vulnCount     = deckNames.Count(n => VulnerableCards.Contains(n));
             int exhaustCount  = deckNames.Count(n => ExhaustCards.Contains(n));
             int blockCount    = deckNames.Count(n => BlockCards.Contains(n));
-            bool isBleedBuild   = (hasRupture || hasCrimson) && selfDmgCount >= 1;
+            bool isBleedBuild   = selfDmgCount >= 2 || ((hasRupture || hasCrimson) && selfDmgCount >= 1);
             bool isVulnBuild    = vulnCount >= 2;
             bool isExhaustBuild = exhaustCount >= 2;
             bool isBlockBuild   = blockCount >= 2;
