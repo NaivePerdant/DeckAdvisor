@@ -21,6 +21,7 @@ public static class CardScoreLabelPatch
         // 奖励界面 或 商店界面 均显示评分
         bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
         bool inShop   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCard>(__instance) != null;
+        MainFile.Logger.Info($"DeckAdvisor: UpdateVisuals card={model.GetType().Name} inReward={inReward} inShop={inShop} parent={__instance.GetParent()?.GetType().Name}");
         if (!inReward && !inShop) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
