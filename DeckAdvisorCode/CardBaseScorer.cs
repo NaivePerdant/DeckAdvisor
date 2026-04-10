@@ -139,7 +139,7 @@ public static class CardBaseScorer
             "Rage"           => PowerScore(Blk(3) * 2, 0),  // 每次攻击+3格挡，估算2次/回合
             "Rupture"        => PowerScore(StrVal, 1),
             "Stampede"       => PowerScore(Dmg(7, false, false, 0) * 0.5f, 2),
-            "StoneArmor"     => PowerScore(Blk(4), 1),
+            "StoneArmor"     => Score(Blk(4 + 3 + 2 + 1), 1),  // 护甲递减：4+3+2+1=10总格挡
             "Tank"           => PowerScore(Blk(3), 1),
             "Vicious"        => PowerScore(DrawVal, 1),
 
