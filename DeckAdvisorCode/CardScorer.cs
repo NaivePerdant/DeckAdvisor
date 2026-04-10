@@ -36,7 +36,7 @@ public static class CardScorer
         { "Pillage",        7.5f },
         { "ForgottenRitual",7.5f },
         { "Aggression",     7.0f },
-        { "Brand",          7.0f },
+        { "Brand",          6.0f },
         // A
         { "Rage",           6.5f },
         { "Taunt",          6.5f },
@@ -62,7 +62,7 @@ public static class CardScorer
         { "FiendFire",      6.0f },
         { "EvilEye",        6.0f },
         // B
-        { "PerfectedStrike",5.0f },
+        { "Spite",          5.0f },
         { "TwinStrike",     5.0f },
         { "Uppercut",       5.0f },
         { "FlameBarrier",   5.0f },
@@ -119,13 +119,25 @@ public static class CardScorer
     // 最多2张：攻略说1-2张的
     static readonly HashSet<string> MaxTwo = new()
         { "Bloodletting", "BurningPact", "PommelStrike", "ShrugItOff" };
+
+    // 前期强/后期弱的牌：楼层越高降分
+    // 每超过阈值楼层降 penaltyPerFloor 分
+    static readonly Dictionary<string, (int thresholdFloor, float penaltyPerFloor)> EarlyGameCards = new()
+    {
+        { "Mangle",       (10, 0.3f) },  // 攻略：抓的早不错，后面抓到不考虑
+        { "Breakthrough", (12, 0.2f) },  // 攻略：一层可以无脑抓，一层以后抓取位有所下降
+        { "Unrelenting",  (12, 0.2f) },  // 攻略：一层推荐抓取，二层缺输出也可以
+        { "PrimalForce",  (15, 0.2f) },  // 攻略：过渡舒服，后期价值下降
+        { "Thrash",       (10, 0.2f) },  // 攻略：一层最强过渡，二层起贬值
+    };
+
     static readonly Dictionary<string, (HashSet<string> targets, float bonus)[]> Synergies = new()
     {
         // 易伤体系：有燃烧(Inflame/Vicious)时，易伤源价值大幅提升
         ["Inflame"]      = [( new(){"Taunt","Thunderclap","Uppercut","Colossus","Bully","FightMe","Dismantle","Bash","Break","Vicious"}, 1.5f )],
         ["Vicious"]      = [( new(){"Taunt","Thunderclap","Uppercut","Colossus","Bully","Dismantle","Bash","Break","Inflame"}, 1.0f )],
         // 自残体系：有撕裂(Rupture)时，主动失血源价值提升
-        ["Rupture"]      = [( new(){"Offering","Bloodletting","CrimsonMantle","BloodWall","Hemokinesis","Breakthrough","DemonicShield","TearAsunder","Conflagration"}, 1.5f )],
+        ["Rupture"]      = [( new(){"Offering","Bloodletting","CrimsonMantle","BloodWall","Hemokinesis","Breakthrough","DemonicShield","TearAsunder"}, 1.5f )],
         // 自残体系：有扯碎(TearAsunder)时，失血源价值提升
         ["TearAsunder"]  = [( new(){"Offering","Bloodletting","CrimsonMantle","Rupture","BloodWall","Hemokinesis"}, 1.5f )],
         // 自残体系：有失血源时，扯碎和撕裂价值提升
@@ -157,6 +169,7 @@ public static class CardScorer
         Current.Clear();
         var deck = player.Deck.Cards.ToList();
         var deckNames = deck.Select(c => c.GetType().Name).ToHashSet();
+        int floor = player.RunState?.TotalFloor ?? 0;
 
         // 检测流派倾向
         int selfDmgCount  = deckNames.Count(n => SelfDamageCards.Contains(n));
@@ -174,7 +187,7 @@ public static class CardScorer
 
         foreach (var card in options)
         {
-            float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild);
+            float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
             string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
             Current[card.Id] = (s, grade);
         }
@@ -193,6 +206,7 @@ public static class CardScorer
 
             var deck = player.Deck.Cards.ToList();
             var deckNames = deck.Select(c => c.GetType().Name).ToHashSet();
+            int floor = player.RunState?.TotalFloor ?? 0;
             int selfDmgCount  = deckNames.Count(n => SelfDamageCards.Contains(n));
             bool hasCrimson   = deckNames.Contains("CrimsonMantle");
             bool hasRupture   = deckNames.Contains("Rupture");
@@ -204,7 +218,7 @@ public static class CardScorer
             bool isExhaustBuild = exhaustCount >= 2;
             bool isBlockBuild   = blockCount >= 2;
 
-            float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild);
+            float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
             string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
             Current[card.Id] = (s, grade);
         }
@@ -238,7 +252,7 @@ public static class CardScorer
 
     // ── 核心评分逻辑 ─────────────────────────────────────────────────────
     static float ScoreCard(CardModel card, List<CardModel> deck, HashSet<string> deckNames,
-        bool isBleedBuild, bool isVulnBuild, bool isExhaustBuild, bool isBlockBuild)
+        bool isBleedBuild, bool isVulnBuild, bool isExhaustBuild, bool isBlockBuild, int floor)
     {
         string name = card.GetType().Name;
 
@@ -277,6 +291,10 @@ public static class CardScorer
         if (name == "TearAsunder" && bleedCount(deckNames) == 0)      s -= 2.0f;
         // 战鼓随机烧牌有风险，卡组有关键牌时降分
         if (name == "DrumOfBattle" && deck.Count > 12)                s -= 1.0f;
+
+        // 楼层惩罚：前期强牌在后期降分
+        if (EarlyGameCards.TryGetValue(name, out var earlyGame) && floor > earlyGame.thresholdFloor)
+            s -= (floor - earlyGame.thresholdFloor) * earlyGame.penaltyPerFloor;
 
         return Math.Clamp(s, 0f, 10f);
     }
