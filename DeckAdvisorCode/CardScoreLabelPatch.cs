@@ -1,6 +1,5 @@
 using Godot;
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 
@@ -9,84 +8,89 @@ namespace DeckAdvisor.DeckAdvisorCode;
 [HarmonyPatch(typeof(NCard), nameof(NCard.UpdateVisuals))]
 public static class CardScoreLabelPatch
 {
+    const string NodeName = "_DeckAdvisorScore";
+
     static void Postfix(NCard __instance)
     {
-        MainFile.Logger.Info($"DeckAdvisor: Postfix triggered card={__instance.Model?.GetType().Name ?? "null"} parent={__instance.GetParent()?.GetType().Name ?? "null"}");
-
-        // 同步删除旧标签，避免 QueueFree 异步导致重叠
-        var existing = __instance.GetParent()?.GetNodeOrNull<Label>("_DeckAdvisorScore");
+        // 同步删除旧框
+        var existing = __instance.GetParent()?.GetNodeOrNull<ColorRect>(NodeName);
         if (existing != null) existing.GetParent().RemoveChild(existing);
 
         var model = __instance.Model;
         if (model == null) return;
 
-        // 奖励界面 或 商店界面 均显示评分
         bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
         bool inShop   = FindAncestorByName(__instance, "NMerchantCard") != null;
-        MainFile.Logger.Info($"DeckAdvisor: card={model.GetType().Name} inReward={inReward} inShop={inShop} ancestors={GetAncestorChain(__instance)}");
         if (!inReward && !inShop) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
         {
-            if (inReward)
-                CardScorer.EvaluateFromReflection(__instance);
-            else
-                CardScorer.EvaluateShopCard(__instance);
+            if (inReward) CardScorer.EvaluateFromReflection(__instance);
+            else          CardScorer.EvaluateShopCard(__instance);
         }
 
         if (!CardScorer.Current.TryGetValue(model.Id, out var result)) return;
 
-        var label = new Label
-        {
-            Name = "_DeckAdvisorScore",
-            Text = $"{result.grade}  {result.score:F1}",
-            HorizontalAlignment = HorizontalAlignment.Center,
-            AutowrapMode = TextServer.AutowrapMode.Off,
-        };
-        label.AddThemeColorOverride("font_color", GradeColor(result.grade));
-        label.AddThemeFontSizeOverride("font_size", 26);
-
         var holder = __instance.GetParent() as Control;
         if (holder == null) return;
-        holder.AddChild(label);
-        var lblSize = label.GetMinimumSize();
-        label.Position = new Vector2((NCard.defaultSize.X - lblSize.X) / 2f, 250f);
+
+        // 构建文本
+        string text = $"{result.grade}  {result.score:F1}";
+        if (!string.IsNullOrEmpty(result.note))
+            text += $"\n{result.note}";
+
+        bool hasNote = !string.IsNullOrEmpty(result.note);
+        float boxW = 190f;
+        float boxH = hasNote ? 64f : 36f;
+        var gradeColor = GradeColor(result.grade);
+
+        // 边框
+        var border = new ColorRect
+        {
+            Name = NodeName,
+            Color = gradeColor,
+            Size = new Vector2(boxW + 4, boxH + 4),
+            Position = new Vector2((NCard.defaultSize.X - boxW) / 2f - 2f, 250f),
+        };
+        // 背景
+        var bg = new ColorRect
+        {
+            Color = new Color(0.05f, 0.05f, 0.05f, 0.92f),
+            Position = new Vector2(2, 2),
+            Size = new Vector2(boxW, boxH),
+        };
+        border.AddChild(bg);
+        // 文字
+        var label = new Label
+        {
+            Text = text,
+            Size = new Vector2(boxW, boxH),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            AutowrapMode = TextServer.AutowrapMode.WordSmart,
+        };
+        label.AddThemeColorOverride("font_color", gradeColor);
+        label.AddThemeFontSizeOverride("font_size", hasNote ? 16 : 20);
+        label.AddThemeColorOverride("font_shadow_color", new Color(0, 0, 0, 1));
+        label.AddThemeConstantOverride("shadow_offset_x", 1);
+        label.AddThemeConstantOverride("shadow_offset_y", 1);
+        bg.AddChild(label);
+
+        holder.AddChild(border);
     }
 
     static T? FindAncestor<T>(Node node) where T : Node
     {
-        var parent = node.GetParent();
-        while (parent != null)
-        {
-            if (parent is T t) return t;
-            parent = parent.GetParent();
-        }
+        var p = node.GetParent();
+        while (p != null) { if (p is T t) return t; p = p.GetParent(); }
         return null;
     }
 
     static Node? FindAncestorByName(Node node, string typeName)
     {
-        var parent = node.GetParent();
-        while (parent != null)
-        {
-            if (parent.GetType().Name == typeName) return parent;
-            parent = parent.GetParent();
-        }
+        var p = node.GetParent();
+        while (p != null) { if (p.GetType().Name == typeName) return p; p = p.GetParent(); }
         return null;
-    }
-
-    static string GetAncestorChain(Node node)
-    {
-        var parts = new System.Text.StringBuilder();
-        var parent = node.GetParent();
-        int depth = 0;
-        while (parent != null && depth < 8)
-        {
-            parts.Append(parent.GetType().Name).Append(" > ");
-            parent = parent.GetParent();
-            depth++;
-        }
-        return parts.ToString();
     }
 
     static Color GradeColor(string grade) => grade switch {

@@ -14,6 +14,10 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         new Harmony(ModId).PatchAll();
+        // 加载用户自定义覆盖（card_overrides.json 与 dll 同目录）
+        var modDir = System.IO.Path.GetDirectoryName(
+            System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "";
+        CardOverrides.Load(modDir);
         Logger.Info("DeckAdvisor initialized.");
     }
 }

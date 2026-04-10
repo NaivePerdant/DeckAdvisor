@@ -1,0 +1,13 @@
+{
+  "_readme": "scoreOverride 为 null 时使用算法分，填数字则覆盖。note 为备注，显示在卡牌下方。",
+  "Offering":        { "scoreOverride": null, "note": "神卡，任何时候都拿" },
+  "Stoke":           { "scoreOverride": null, "note": "烧牌+过牌，无脑抓" },
+  "Bloodletting":    { "scoreOverride": null, "note": "配合剑柄打击可无限" },
+  "PommelStrike":    { "scoreOverride": null, "note": "攻击+抽牌，循环核心" },
+  "BurningPact":     { "scoreOverride": null, "note": "烧1抽2，终端组件" },
+  "Rupture":         { "scoreOverride": null, "note": "受伤叠力量，自残流核心" },
+  "TearAsunder":     { "scoreOverride": null, "note": "失血次数越多伤害越高" },
+  "CrimsonMantle":   { "scoreOverride": null, "note": "每回合失1血+格挡，触发撕裂" },
+  "Barricade":       { "scoreOverride": null, "note": "需配合全身撞击才有价值" },
+  "BodySlam":        { "scoreOverride": null, "note": "需配合壁垒，升级变0费" }
+}

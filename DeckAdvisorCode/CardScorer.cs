@@ -7,7 +7,7 @@ namespace DeckAdvisor.DeckAdvisorCode;
 
 public static class CardScorer
 {
-    public static readonly Dictionary<ModelId, (float score, string grade)> Current = new();
+    public static readonly Dictionary<ModelId, (float score, string grade, string? note)> Current = new();
 
     // ── 流派检测阈值 ─────────────────────────────────────────────────────
     // 主动失血源（造成 Unblockable 自伤的牌，含绯红披风每回合自动触发）
@@ -114,7 +114,7 @@ public static class CardScorer
         {
             float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
             string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
-            Current[card.Id] = (s, grade);
+            Current[card.Id] = (s, grade, CardOverrides.GetNote(card.GetType().Name));
         }
     }
 
@@ -145,7 +145,7 @@ public static class CardScorer
 
             float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
             string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
-            Current[card.Id] = (s, grade);
+            Current[card.Id] = (s, grade, CardOverrides.GetNote(card.GetType().Name));
         }
         catch (Exception ex)
         {
@@ -181,9 +181,9 @@ public static class CardScorer
     {
         string name = card.GetType().Name;
 
-        // 1. 基础分（费效比+功能价值）
+        // 1. 基础分（费效比+功能价值），用户覆盖优先
         int aoeCount = deckNames.Count(n => AoeCards.Contains(n));
-        float s = CardBaseScorer.Calculate(name, aoeCount);
+        float s = CardOverrides.GetScoreOverride(name) ?? CardBaseScorer.Calculate(name, aoeCount);
 
         // 2. 联动加分：deck 中已有的牌对当前候选牌加分
         foreach (var (key, rules) in Synergies)
