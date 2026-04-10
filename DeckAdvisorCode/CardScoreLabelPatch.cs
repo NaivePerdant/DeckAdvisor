@@ -40,7 +40,6 @@ public static class CardScoreLabelPatch
         {
             Name = "_DeckAdvisorScore",
             Text = $"{result.grade}  {result.score:F1}",
-            ZIndex = 10,
             HorizontalAlignment = HorizontalAlignment.Center,
             AutowrapMode = TextServer.AutowrapMode.Off,
         };
