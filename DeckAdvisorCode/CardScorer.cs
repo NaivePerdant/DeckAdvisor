@@ -86,10 +86,10 @@ public static class CardScorer
     };
 
     // ── 流派检测阈值 ─────────────────────────────────────────────────────
-    // 主动失血源（造成 Unblockable 自伤的牌）
+    // 主动失血源（造成 Unblockable 自伤的牌，含绯红披风每回合自动触发）
+    // 注意：好勇斗狠(Aggression)是从弃牌堆取攻击牌，不是失血
     static readonly HashSet<string> SelfDamageCards = new()
-        { "Bloodletting", "BloodWall", "Breakthrough", "DemonicShield", "Hemokinesis", "Offering" };
-    // CrimsonMantle/Rupture 是能力牌，挂上后被动触发，单独处理
+        { "Bloodletting", "BloodWall", "Breakthrough", "DemonicShield", "Hemokinesis", "Offering", "CrimsonMantle" };
 
     // 易伤源（给敌人施加 Vulnerable 的牌）
     static readonly HashSet<string> VulnerableCards = new()
