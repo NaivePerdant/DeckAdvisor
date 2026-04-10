@@ -104,7 +104,21 @@ public static class CardScorer
     static readonly HashSet<string> BlockCards = new()
         { "Barricade", "BodySlam", "Impervious", "TrueGrit", "EvilEye", "CrimsonMantle" };
 
-    // ── 联动加分表：deck 中有 key 时，value 中的卡获得加分 ───────────────
+    // ── 重复惩罚：已有N张时再拿同名牌降分 ──────────────────────────────
+    // 只需1张：能力牌 + 攻略明确说拿一张就够的
+    static readonly HashSet<string> MaxOne = new()
+    {
+        // 能力牌（挂上生效，多张无意义）
+        "Rupture", "CrimsonMantle", "Inflame", "Rage", "Barricade",
+        "DarkEmbrace", "FeelNoPain", "DemonForm", "Pyre", "Aggression",
+        "Corruption", "Juggernaut", "Hellraiser", "Vicious", "Stampede",
+        // 攻略明确说拿一张
+        "Offering", "Headbutt", "PerfectedStrike", "BattleTrance",
+    };
+
+    // 最多2张：攻略说1-2张的
+    static readonly HashSet<string> MaxTwo = new()
+        { "Bloodletting", "BurningPact", "PommelStrike", "ShrugItOff" };
     static readonly Dictionary<string, (HashSet<string> targets, float bonus)[]> Synergies = new()
     {
         // 易伤体系：有燃烧(Inflame/Vicious)时，易伤源价值大幅提升
@@ -208,6 +222,12 @@ public static class CardScorer
         if (isBlockBuild   && BlockCards.Contains(name))        s += 1.0f;
 
         // 4. 特殊惩罚
+        // 重复惩罚
+        int copies = deck.Count(c => c.GetType().Name == name);
+        if (copies >= 1 && MaxOne.Contains(name))  s -= 4.0f;
+        if (copies >= 2 && MaxTwo.Contains(name))  s -= 3.0f;
+        // 能力牌通用：超过1张大幅降分
+        if (copies >= 1 && card.Type == CardType.Power) s -= 3.0f;
         // 壁垒/全身撞击单独出现时价值大幅下降（需要配合）
         if (name == "Barricade" && !deckNames.Contains("BodySlam"))   s -= 1.5f;
         if (name == "BodySlam"  && !deckNames.Contains("Barricade"))  s -= 1.5f;
