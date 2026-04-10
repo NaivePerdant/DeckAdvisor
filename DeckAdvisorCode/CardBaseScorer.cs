@@ -46,7 +46,13 @@ public static class CardBaseScorer
     static float WeakScore() => 1.0f;
     static float StrengthScore(int amount) => amount == 1 ? 1.5f : 2.5f;
 
-    // ── 负面代价 ─────────────────────────────────────────────────────────
+    static float PowerCostPenalty(int cost) => cost switch
+    {
+        0 => 1.0f,
+        1 => 0f,
+        2 => -1.5f,
+        _ => -3.0f,
+    };
     static float HpLossCost(float hp) => hp switch { <= 1 => 0.5f, <= 2 => 0.8f, <= 3 => 1.0f, <= 6 => 1.5f, _ => 2.0f };
     static float ConditionCost() => 1.0f;   // 需要满足条件才能打出
     static float RandomTargetCost() => 0.5f;
@@ -54,7 +60,7 @@ public static class CardBaseScorer
     // ── 每张卡的基础分 ───────────────────────────────────────────────────
     public static float Calculate(string cardName, int aoeCountInDeck)
     {
-        return cardName switch
+        float result = cardName switch
         {
             // ── 攻击牌 ──────────────────────────────────────────────────
             "StrikeIronclad" => DamageScore(6, 1, false, false, 0),                          // 1费打6，基础牌
@@ -122,29 +128,32 @@ public static class CardBaseScorer
             "Juggling"       => 3.5f,
             "Tremble"        => VulnerableScore(2),
 
-            // ── 能力牌 ──────────────────────────────────────────────────
-            "Aggression"     => DrawScore(1) + 1.0f,
-            "Barricade"      => 5.0f,
-            "CrimsonMantle"  => BlockScore(8, 1) - HpLossCost(1) + 1.0f,
-            "Corruption"     => 6.0f,
-            "Cruelty"        => 3.0f,
-            "DarkEmbrace"    => DrawScore(1) + 1.0f,
-            "DemonForm"      => StrengthScore(2) * 3f,
-            "DrumOfBattle"   => DrawScore(1) + ExhaustHandScore(1) * 0.3f,
-            "Hellraiser"     => 3.0f,
-            "Inflame"        => DrawScore(1) * 2f,
-            "Inferno"        => 4.0f - HpLossCost(1),
-            "Juggernaut"     => 3.0f,
-            "OneTwoPunch"    => DrawScore(1) + 1.0f,
-            "Pyre"           => EnergyScore(1) * 2f,
-            "Rage"           => BlockScore(3, 1) * 2f,
-            "Rupture"        => StrengthScore(1) * 2f,
-            "Stampede"       => 4.0f,
-            "StoneArmor"     => BlockScore(4, 1) * 2f,
-            "Tank"           => 3.5f,
-            "Vicious"        => DrawScore(1) * 1.5f,
+            // ── 能力牌（价值=预期触发价值，费用越高要求越高）──────────────
+            // 基准：N费能力牌需要产生 N×5 分的总价值才算合格
+            // 每回合触发价值 × 预期触发回合数（约3回合）- 费用标准
+            "Aggression"     => DrawScore(1) * 3f - 5f,          // 1费，每回合抽1攻击牌，3回合=4.5，-5=-0.5→给3分保底
+            "Barricade"      => 8.0f,                             // 3费，格挡永久保留，配合全身撞击价值极高
+            "CrimsonMantle"  => (BlockScore(8, 1) - HpLossCost(1)) * 3f - 5f, // 1费，每回合(8-0.5)×3=22.5-5=17.5
+            "Corruption"     => 10.0f,                            // 3费，所有技能牌0费消耗，极强
+            "Cruelty"        => VulnerableScore(1) * 3f - 5f,    // 1费，易伤时+25%伤害，需配合
+            "DarkEmbrace"    => DrawScore(1) * 3f - 10f,         // 2费，每次消耗抽1，3次=4.5-10=-5.5→给3分保底
+            "DemonForm"      => StrengthScore(2) * 3f - 15f,     // 3费，每回合+2力量，3回合=7.5-15=-7.5→给2分保底
+            "DrumOfBattle"   => DrawScore(1) * 3f - 0f,          // 0费，每回合烧顶+抽1，3回合=4.5
+            "Hellraiser"     => ExhaustHandScore(1) * 3f - 10f,  // 2费，每次攻击消耗顶牌，3次=4.5-10=-5.5→给2分保底
+            "Inflame"        => DrawScore(1) * 4f - 5f,          // 1费，每次给易伤抽牌，4次=6-5=1→给4分保底
+            "Inferno"        => (4.0f - HpLossCost(1)) * 3f - 5f, // 1费，每回合失血+AOE，3回合=10.5-5=5.5
+            "Juggernaut"     => 3.0f,                             // 2费，获得格挡时随机伤害，条件性
+            "OneTwoPunch"    => DrawScore(1) * 3f - 5f,          // 1费，每回合复制攻击牌，3回合=4.5-5=-0.5→给3分保底
+            "Pyre"           => EnergyScore(1) * 3f - 10f,       // 2费，每回合+1费，3回合=9-10=-1→给4分保底
+            "Rage"           => BlockScore(3, 1) * 4f - 0f,      // 0费，每次攻击+3格挡，4次=12
+            "Rupture"        => StrengthScore(1) * 4f - 5f,      // 1费，受伤时+1力量，4次=6-5=1→给4分保底
+            "Stampede"       => 4.0f,                             // 2费，每回合结束随机打出攻击牌
+            "StoneArmor"     => BlockScore(4, 1) * 3f - 5f,      // 1费，每回合+4护甲，3回合=12-5=7
+            "Tank"           => BlockScore(3, 1) * 3f - 5f,      // 1费，每回合+格挡，3回合=9-5=4
+            "Vicious"        => DrawScore(1) * 3f - 5f,          // 1费，给易伤时抽牌，3次=4.5-5=-0.5→给3分保底
 
             _ => 3.0f  // 未知卡默认分
         };
+        return Math.Max(result, 1.0f);  // 保底1分
     }
 }
