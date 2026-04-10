@@ -61,9 +61,10 @@ public static class CardScorer
 
     static readonly Dictionary<string, (HashSet<string> targets, float bonus)[]> Synergies = new()
     {
-        // 易伤体系：有燃烧(Inflame/Vicious)时，易伤源价值大幅提升
-        ["Inflame"]      = [( new(){"Taunt","Thunderclap","Uppercut","Colossus","Bully","FightMe","Dismantle","Bash","Break","Vicious"}, 1.5f )],
-        ["Vicious"]      = [( new(){"Taunt","Thunderclap","Uppercut","Colossus","Bully","Dismantle","Bash","Break","Inflame"}, 1.0f )],
+        // 易伤体系：有凶恶(Vicious)时，易伤源价值大幅提升（每次给易伤抽牌）
+        ["Vicious"]      = [( new(){"Taunt","Thunderclap","Uppercut","Colossus","Bully","FightMe","Dismantle","Bash","Break"}, 1.5f )],
+        // 力量体系：有燃烧(Inflame)时，多段攻击和力量来源价值提升
+        ["Inflame"]      = [( new(){"TwinStrike","SwordBoomerang","Whirlwind","Rupture","Mangle","DemonForm"}, 1.0f )],
         // 自残体系：有撕裂(Rupture)时，主动失血源价值提升
         ["Rupture"]      = [( new(){"Offering","Bloodletting","CrimsonMantle","BloodWall","Hemokinesis","Breakthrough","DemonicShield","TearAsunder"}, 1.5f )],
         // 自残体系：有扯碎(TearAsunder)时，失血源价值提升
@@ -80,15 +81,15 @@ public static class CardScorer
         // 消耗体系
         ["DarkEmbrace"]  = [( new(){"SecondWind","Corruption","Unmovable","FeelNoPain","Stoke","BurningPact"}, 1.5f )],
         // 易伤翻倍combo
-        ["Dominate"]     = [( new(){"MoltenFist","Inflame","Taunt","Thunderclap","Vicious"}, 1.5f )],
-        ["MoltenFist"]   = [( new(){"Dominate","Inflame","Vicious"}, 1.5f )],
+        ["Dominate"]     = [( new(){"MoltenFist","Vicious","Taunt","Thunderclap"}, 1.5f )],
+        ["MoltenFist"]   = [( new(){"Dominate","Vicious"}, 1.5f )],
         // 凌虐(Mangle)：吃力量加成，有力量来源时价值提升
-        ["Mangle"]       = [( new(){"Rupture","Inflame","DemonForm","Inferno","Vicious"}, 1.0f )],
+        ["Mangle"]       = [( new(){"Rupture","Inflame","DemonForm","Inferno"}, 1.0f )],
         // 剑柄打击+放血可无限
         ["PommelStrike"] = [( new(){"Bloodletting","ExpectAFight","ForgottenRitual"}, 1.0f )],
-        // 燃烧(Inflame)本身：有易伤源时价值提升
-        ["Taunt"]        = [( new(){"Inflame","Vicious"}, 1.0f )],
-        ["Thunderclap"]  = [( new(){"Inflame","Vicious"}, 1.0f )],
+        // 凶恶(Vicious)本身：有易伤源时价值提升
+        ["Taunt"]        = [( new(){"Vicious"}, 1.0f )],
+        ["Thunderclap"]  = [( new(){"Vicious"}, 1.0f )],
     };
 
     // ── 公开接口 ─────────────────────────────────────────────────────────

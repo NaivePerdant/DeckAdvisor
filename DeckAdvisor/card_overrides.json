@@ -18,8 +18,8 @@
   "Conflagration":   { "scoreOverride": null, "note": "本回合打出攻击牌越多伤害越高，抓位高" },
   "Inferno":         { "scoreOverride": null, "note": "每回合失血+AOE，配合放血卡很强" },
 
-  "Inflame":         { "scoreOverride": null, "note": "每次给易伤抽牌，易伤流引擎，先拿燃烧再拿易伤源" },
-  "Vicious":         { "scoreOverride": null, "note": "给易伤时抽牌，卡组膨胀时更好用，小卡组不推荐" },
+  "Inflame":         { "scoreOverride": null, "note": "1费+2力量，升级+3，配合多段攻击" },
+  "Vicious":         { "scoreOverride": null, "note": "每次给易伤抽牌，易伤流引擎，先拿凶恶再拿易伤源" },
   "Dominate":        { "scoreOverride": null, "note": "易伤层数转力量，必须升级去消耗" },
   "MoltenFist":      { "scoreOverride": null, "note": "翻倍易伤层数，消耗，配合主宰指数增长" },
   "Bully":           { "scoreOverride": null, "note": "0费，易伤层数转伤害，无易伤时只打4" },

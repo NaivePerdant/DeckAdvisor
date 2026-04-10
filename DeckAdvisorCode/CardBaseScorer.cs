@@ -141,7 +141,7 @@ public static class CardBaseScorer
             "DemonForm"      => PowerScore(StrengthVal(2), 3),
             "DrumOfBattle"   => PowerScore(DrawVal + BurnVal * 0.3f, 0),
             "Hellraiser"     => PowerScore(BurnVal, 2),
-            "Inflame"        => PowerScore(DrawVal * 2, 1),
+            "Inflame"        => PowerScore(StrengthVal(2), 1),   // 1费，直接+2力量
             "Inferno"        => PowerScore(Dmg(4, false, true, aoeCountInDeck) - HpLoss(1), 1),
             "Juggernaut"     => PowerScore(JuggernautVal(5), 2),
             "OneTwoPunch"    => PowerScore(DrawVal, 1),
@@ -151,7 +151,7 @@ public static class CardBaseScorer
             "Stampede"       => PowerScore(Dmg(7, false, false, 0) * 0.5f, 2),
             "StoneArmor"     => Score(PlatingVal(4), 1),
             "Tank"           => PowerScore(Blk(3), 1),
-            "Vicious"        => PowerScore(DrawVal, 1),
+            "Vicious"        => PowerScore(DrawVal * 2, 1),   // 1费，每次给易伤抽1张牌
 
             _ => 3.0f
         };
