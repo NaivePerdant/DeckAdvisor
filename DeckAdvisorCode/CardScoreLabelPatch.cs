@@ -22,7 +22,7 @@ public static class CardScoreLabelPatch
 
         // 奖励界面 或 商店界面 均显示评分
         bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
-        bool inShop   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCard>(__instance) != null;
+        bool inShop   = FindAncestorByName(__instance, "NMerchantCard") != null;
         MainFile.Logger.Info($"DeckAdvisor: card={model.GetType().Name} inReward={inReward} inShop={inShop} ancestors={GetAncestorChain(__instance)}");
         if (!inReward && !inShop) return;
 
@@ -55,6 +55,17 @@ public static class CardScoreLabelPatch
         while (parent != null)
         {
             if (parent is T t) return t;
+            parent = parent.GetParent();
+        }
+        return null;
+    }
+
+    static Node? FindAncestorByName(Node node, string typeName)
+    {
+        var parent = node.GetParent();
+        while (parent != null)
+        {
+            if (parent.GetType().Name == typeName) return parent;
             parent = parent.GetParent();
         }
         return null;
