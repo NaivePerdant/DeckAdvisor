@@ -51,11 +51,12 @@ public static class CardScorer
     // 前期强/后期弱的牌：关卡越高降分（actIndex: 0=第一关, 1=第二关, 2=第三关）
     static readonly Dictionary<string, (int thresholdAct, float penalty)> EarlyGameCards = new()
     {
-        { "Mangle",       (1, 3.0f) },  // 攻略：抓的早不错，后面抓到不考虑
-        { "Breakthrough", (1, 1.5f) },  // 攻略：一层可以无脑抓，一层以后抓取位有所下降
-        { "Unrelenting",  (1, 1.0f) },  // 攻略：一层推荐抓取，二层缺输出也可以
-        { "PrimalForce",  (2, 1.5f) },  // 攻略：过渡舒服，后期价值下降
-        { "Thrash",       (1, 2.0f) },  // 攻略：一层最强过渡，二层起贬值
+        { "Mangle",       (1, 3.0f) },
+        { "Breakthrough", (1, 1.5f) },
+        { "Unrelenting",  (1, 1.0f) },
+        { "PrimalForce",  (2, 1.5f) },
+        { "Thrash",       (1, 2.0f) },
+        { "Bludgeon",     (1, 5.0f) },  // 3费纯伤，后期太慢
     };
 
     static readonly Dictionary<string, (HashSet<string> targets, float bonus)[]> Synergies = new()
@@ -113,7 +114,7 @@ public static class CardScorer
         foreach (var card in options)
         {
             float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
-            string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
+            string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : s >= 0f ? "D" : "F";
             Current[card.Id] = (s, grade, CardOverrides.GetNote(card.GetType().Name));
         }
     }
@@ -144,7 +145,7 @@ public static class CardScorer
             bool isBlockBuild   = blockCount >= 2;
 
             float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild, floor);
-            string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
+            string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : s >= 0f ? "D" : "F";
             Current[card.Id] = (s, grade, CardOverrides.GetNote(card.GetType().Name));
         }
         catch (Exception ex)
@@ -222,7 +223,7 @@ public static class CardScorer
         if (EarlyGameCards.TryGetValue(name, out var earlyGame) && floor > earlyGame.thresholdAct)
             s -= earlyGame.penalty;
 
-        return Math.Clamp(s, 0f, 10f);
+        return s;
     }
 
     static int vulnCount(HashSet<string> deckNames)  => deckNames.Count(n => VulnerableCards.Contains(n));

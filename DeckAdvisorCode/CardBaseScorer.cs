@@ -1,153 +1,149 @@
-using MegaCrit.Sts2.Core.Entities.Cards;
-
 namespace DeckAdvisor.DeckAdvisorCode;
 
 /// <summary>
-/// 基于费效比和功能价值计算卡牌基础分。
-/// 基准：1费打9伤=5分，功能价值叠加，负面效果减分。
+/// 统一评分公式：score = rawValue / max(cost, 1) × k + zeroCostBonus
+/// rawValue = 伤害分 + 格挡分 + 功能分 - 负面分
+/// 基准：1费打9 = 5分，k ≈ 0.578
+/// 无上下限，允许负分。
 /// </summary>
 public static class CardBaseScorer
 {
-    // ── 伤害基准（1费打9=5分） ────────────────────────────────────────────
-    // 每费用对应的基准伤害和每点伤害的分值
-    static float DamageScore(float damage, int cost, bool isMultiHit, bool isAoe,
-                              int aoeCountInDeck)
-    {
-        float baseDmg = cost switch { 0 => 4.5f, 1 => 9f, 2 => 18f, 3 => 27f, _ => 9f };
-        float perDmg  = cost switch { 0 => 0.55f, 1 => 0.28f, 2 => 0.14f, 3 => 0.09f, _ => 0.28f };
+    // 基准系数：使得 1费打9 = 5分
+    // rawValue(1费打9) = 9 × dmgCoeff = 9 × 0.96 = 8.64
+    // score = 8.64 / 1 × k = 5 → k = 0.578
+    const float K = 0.578f;
 
-        float score = 5f + (damage - baseDmg) * perDmg;
+    // ── 原始价值系数 ──────────────────────────────────────────────────────
+    const float DmgCoeff   = 0.96f;   // 1点伤害的原始价值
+    const float BlockCoeff = 1.25f;   // 1点格挡的原始价值（1费5格挡≈1费打9×0.7）
+    const float DrawVal    = 2.5f;    // 抽1张牌
+    const float EnergyVal  = 3.0f;    // +1费
+    const float ExhaustVal = 1.0f;    // 消耗自身（不占牌库）
+    const float BurnVal    = 1.5f;    // 消耗手牌1张（精简卡组）
+    const float SearchVal  = 2.0f;    // 检索/调牌序
+    const float VulnVal    = 1.0f;    // 施加1层易伤
+    const float WeakVal    = 1.0f;    // 施加虚弱
+    const float StrVal     = 1.5f;    // +1力量
 
-        if (isMultiHit) score *= 1.2f;  // 多段独立结算力量/易伤
-        if (isAoe)
-        {
-            float aoeMult = aoeCountInDeck == 0 ? 1.3f : aoeCountInDeck == 1 ? 1.0f : 0.7f;
-            score *= aoeMult;
-        }
+    // 职业系数：战士攻击牌略高，防御牌略低
+    const float AttackMult = 1.1f;
+    const float BlockMult  = 0.9f;
 
-        return Math.Max(score, 0f);
-    }
+    // 多段/AOE加成
+    static float MultiHitMult(bool isMultiHit) => isMultiHit ? 1.2f : 1.0f;
+    static float AoeMult(bool isAoe, int aoeCount) =>
+        !isAoe ? 1.0f : aoeCount == 0 ? 1.3f : aoeCount == 1 ? 1.0f : 0.7f;
 
-    // ── 功能价值 ─────────────────────────────────────────────────────────
-    static float DrawScore(int cards) => cards switch { 1 => 2.5f, 2 => 4.5f, 3 => 6.0f, _ => 6.0f + (cards - 3) * 1.2f };
-    static float EnergyScore(int energy) => energy switch { 1 => 3.0f, 2 => 5.0f, 3 => 7.0f, _ => 7.0f };
-    static float ExhaustSelfScore() => 1.0f;
-    static float ExhaustHandScore(int cards) => cards * 1.5f;
-    static float SearchScore() => 2.0f;
-    // 格挡分：1费4格挡=4分基准（每格挡1分），按费用缩放
-    static float BlockScore(float block, int cost = 1) => cost switch
-    {
-        0 => block * 1.6f,
-        1 => block * 0.8f,
-        2 => block * 0.4f,
-        _ => block * 0.27f,
-    };
-    static float VulnerableScore(int stacks) => stacks == 1 ? 1.0f : 1.8f;
-    static float WeakScore() => 1.0f;
-    static float StrengthScore(int amount) => amount == 1 ? 1.5f : 2.5f;
-    // 费用惩罚：每费 -5分（N费牌需要产生N×5分价值才合格）
-    static float CostPenalty(int cost) => cost * 5.0f;
-    static float HpLossCost(float hp) => hp switch { <= 1 => 0.5f, <= 2 => 0.8f, <= 3 => 1.0f, <= 6 => 1.5f, _ => 2.0f };
-    static float ConditionCost() => 1.0f;
-    static float RandomTargetCost() => 0.5f;
+    // 负面代价
+    static float HpLoss(float hp) => hp <= 1 ? 0.5f : hp <= 2 ? 0.8f : hp <= 3 ? 1.0f : hp <= 6 ? 1.5f : 2.0f;
 
-    // ── 每张卡的基础分 ───────────────────────────────────────────────────
+    // ── 核心计算 ──────────────────────────────────────────────────────────
+    static float Score(float rawValue, int cost) =>
+        rawValue / Math.Max(cost, 1) * K + (cost == 0 ? 2.0f : 0f);
+
+    static float Dmg(float dmg, bool multiHit, bool aoe, int aoeCount) =>
+        dmg * DmgCoeff * AttackMult * MultiHitMult(multiHit) * AoeMult(aoe, aoeCount);
+
+    static float Blk(float block) => block * BlockCoeff * BlockMult;
+
+    // 能力牌：rawValue = 每回合触发价值 × 预期回合数
+    static float PowerScore(float perTurnValue, int cost, int turns = 3) =>
+        Score(perTurnValue * turns, cost);
+
+    // ── 每张卡的基础分 ────────────────────────────────────────────────────
     public static float Calculate(string cardName, int aoeCountInDeck)
     {
-        float result = cardName switch
+        return cardName switch
         {
-            // ── 攻击牌 ──────────────────────────────────────────────────
-            "StrikeIronclad" => DamageScore(6, 1, false, false, 0),                          // 1费打6，基础牌
-            "Anger"          => DamageScore(6, 0, false, false, 0),                          // 0费打6
-            "Bash"           => DamageScore(8, 2, false, false, 0) + VulnerableScore(2),     // 2费打8+2易伤
-            "Breakthrough"   => DamageScore(9, 1, false, true, aoeCountInDeck) - HpLossCost(1), // 1费AOE9+失1血
-            "Bludgeon"       => DamageScore(32, 3, false, false, 0),                         // 3费打32
-            "BodySlam"       => 5.0f,  // 伤害=当前格挡，动态，给中等基础分
-            "Bully"          => 3.0f,  // 0费打4+易伤层数，无易伤时很弱
-            "Conflagration"  => DamageScore(8, 1, false, true, aoeCountInDeck),              // 1费AOE8+本回合攻击牌数×2
-            "Dismantle"      => DamageScore(8, 1, false, false, 0) + VulnerableScore(1),     // 1费打8，有易伤打2次
-            "FiendFire"      => 6.0f + ExhaustSelfScore(),  // 2费消耗所有手牌×7伤，动态
-            "FightMe"        => DamageScore(10, 2, true, false, 0) + StrengthScore(2),       // 2费打5×2+2力量
-            "Grapple"        => DamageScore(7, 1, false, false, 0),                          // 1费打7+控制
-            "Headbutt"       => DamageScore(9, 1, false, false, 0) + SearchScore(),          // 1费打9+检索
-            "Hemokinesis"    => DamageScore(14, 1, false, false, 0) - HpLossCost(2),         // 1费打14-失2血
-            "HowlFromBeyond" => DamageScore(16, 3, false, true, aoeCountInDeck) + ExhaustSelfScore(), // 3费AOE16消耗
-            "IronWave"       => DamageScore(5, 1, false, false, 0) + BlockScore(5, 1),          // 1费打5+5格挡
-            "Mangle"         => DamageScore(15, 3, false, false, 0),                         // 3费打15+敌人-10力量
-            "MoltenFist"     => DamageScore(10, 1, false, false, 0) + ExhaustSelfScore(),    // 1费打10消耗+翻倍易伤
-            "PactsEnd"       => DamageScore(17, 0, false, true, aoeCountInDeck) - ConditionCost(), // 0费AOE17需消耗堆≥3
-            "PerfectedStrike"=> 5.0f,  // 2费，伤害随打击牌数量变化，动态
-            "Pillage"        => DamageScore(6, 1, false, false, 0) + DrawScore(1),           // 1费打6+持续抽攻击牌
-            "PommelStrike"   => DamageScore(9, 1, false, false, 0) + DrawScore(1),           // 1费打9+抽1
-            "Rampage"        => DamageScore(9, 1, false, false, 0),                          // 1费打9，每次打出+3最大血
-            "SetupStrike"    => DamageScore(7, 1, false, false, 0) + StrengthScore(2),       // 1费打7+2力量（临时）
-            "Spite"          => DamageScore(6, 0, false, false, 0) + DrawScore(1) * 0.5f,    // 0费打6，受伤时抽1（条件性）
-            "Stomp"          => DamageScore(12, 3, false, true, aoeCountInDeck),             // 3费AOE12+本回合攻击牌数加成
-            "SwordBoomerang" => DamageScore(9, 1, true, false, 0) - RandomTargetCost(),      // 1费3×3多段随机
-            "TearAsunder"    => 6.0f,  // 2费，段数=失血次数，动态，给中等基础分
-            "Thrash"         => DamageScore(8, 1, true, false, 0) + ExhaustSelfScore(),      // 1费打4×2消耗
-            "Thunderclap"    => DamageScore(4, 1, false, true, aoeCountInDeck) + VulnerableScore(1), // 1费AOE4+1易伤
-            "TwinStrike"     => DamageScore(10, 1, true, false, 0),                          // 1费打5×2多段
-            "Unrelenting"    => DamageScore(12, 2, false, false, 0),                         // 2费打12+下张攻击0费
-            "Uppercut"       => DamageScore(13, 2, false, false, 0) + VulnerableScore(1) + WeakScore(), // 2费打13+虚弱+易伤
-            "Whirlwind"      => DamageScore(5, 1, true, true, aoeCountInDeck),               // X费AOE多段，按1费算
+            // ── 攻击牌 ────────────────────────────────────────────────────
+            "StrikeIronclad" => Score(Dmg(6, false, false, 0), 1),
+            "Anger"          => Score(Dmg(6, false, false, 0), 0),
+            "Bash"           => Score(Dmg(8, false, false, 0) + VulnVal * 2, 2),
+            "Breakthrough"   => Score(Dmg(9, false, true, aoeCountInDeck) - HpLoss(1), 1),
+            "Bludgeon"       => Score(Dmg(32, false, false, 0), 3),
+            "BodySlam"       => Score(Dmg(10, false, false, 0), 1),   // 伤害=格挡，估算10
+            "Bully"          => Score(Dmg(4, false, false, 0), 0),    // 无易伤时只打4
+            "Conflagration"  => Score(Dmg(8, false, true, aoeCountInDeck), 1),  // 本回合攻击牌数×2
+            "Dismantle"      => Score(Dmg(8, false, false, 0) + VulnVal, 1),    // 有易伤打2次
+            "FiendFire"      => Score(Dmg(7 * 3, false, false, 0) + ExhaustVal, 2), // 估算消耗3张×7
+            "FightMe"        => Score(Dmg(10, true, false, 0) + StrVal * 2, 2),
+            "Grapple"        => Score(Dmg(7, false, false, 0), 1),
+            "Headbutt"       => Score(Dmg(9, false, false, 0) + SearchVal, 1),
+            "Hemokinesis"    => Score(Dmg(14, false, false, 0) - HpLoss(2), 1),
+            "HowlFromBeyond" => Score(Dmg(16, false, true, aoeCountInDeck) + ExhaustVal, 3),
+            "IronWave"       => Score(Dmg(5, false, false, 0) + Blk(5), 1),
+            "Mangle"         => Score(Dmg(15, false, false, 0), 3),
+            "MoltenFist"     => Score(Dmg(10, false, false, 0) + ExhaustVal, 1),
+            "PactsEnd"       => Score(Dmg(17, false, true, aoeCountInDeck) - 1.0f, 0), // 需条件
+            "PerfectedStrike"=> Score(Dmg(9, false, false, 0), 2),   // 估算6张打击牌
+            "Pillage"        => Score(Dmg(6, false, false, 0) + DrawVal, 1),
+            "PommelStrike"   => Score(Dmg(9, false, false, 0) + DrawVal, 1),
+            "Rampage"        => Score(Dmg(9, false, false, 0), 1),
+            "SetupStrike"    => Score(Dmg(7, false, false, 0) + StrVal * 2, 1),
+            "Spite"          => Score(Dmg(6, false, false, 0) + DrawVal * 0.5f, 0),
+            "Stomp"          => Score(Dmg(12, false, true, aoeCountInDeck), 3),
+            "SwordBoomerang" => Score(Dmg(9, true, false, 0) - 0.5f, 1),  // 随机目标
+            "TearAsunder"    => Score(Dmg(5 * 3, true, false, 0), 2),     // 估算3段
+            "Thrash"         => Score(Dmg(8, true, false, 0) + ExhaustVal, 1),
+            "Thunderclap"    => Score(Dmg(4, false, true, aoeCountInDeck) + VulnVal, 1),
+            "TwinStrike"     => Score(Dmg(10, true, false, 0), 1),
+            "Unrelenting"    => Score(Dmg(12, false, false, 0) + EnergyVal * 0.5f, 2),
+            "Uppercut"       => Score(Dmg(13, false, false, 0) + VulnVal + WeakVal, 2),
+            "Whirlwind"      => Score(Dmg(5 * 3, true, true, aoeCountInDeck), 1), // 估算3费
 
-            // ── 技能牌（功能价值 - 费用标准）────────────────────────────
-            "DefendIronclad" => BlockScore(5, 1) - CostPenalty(1),
-            "ShrugItOff"     => BlockScore(8, 1) + DrawScore(1) - CostPenalty(1),
-            "Armaments"      => BlockScore(5, 1) + 2.0f - CostPenalty(1),
-            "BattleTrance"   => DrawScore(3) - CostPenalty(0),
-            "BloodWall"      => BlockScore(16, 2) - HpLossCost(2) - CostPenalty(2),
-            "Bloodletting"   => EnergyScore(2) - HpLossCost(3) - CostPenalty(0),
-            "BurningPact"    => ExhaustHandScore(1) + DrawScore(2) + ExhaustSelfScore() - CostPenalty(1),
-            "Cascade"        => 4.0f - CostPenalty(0),  // X费，按0费算
-            "Colossus"       => BlockScore(5, 1) + 2.0f - CostPenalty(1),
-            "DemonicShield"  => 4.0f + ExhaustSelfScore() - HpLossCost(1) - CostPenalty(0),
-            "Dominate"       => StrengthScore(2) + ExhaustSelfScore() - CostPenalty(1),
-            "EvilEye"        => BlockScore(8, 1) - CostPenalty(1),
-            "ExpectAFight"   => EnergyScore(1) * 0.8f - CostPenalty(2),
-            "FeelNoPain"     => 3.0f - CostPenalty(1),
-            "FlameBarrier"   => BlockScore(12, 2) - CostPenalty(2),
-            "ForgottenRitual"=> EnergyScore(3) - ConditionCost() - CostPenalty(1),
-            "Havoc"          => ExhaustHandScore(1) * 0.5f - CostPenalty(1),
-            "Impervious"     => BlockScore(30, 2) + ExhaustSelfScore() - CostPenalty(2),
-            "InfernalBlade"  => 3.5f + ExhaustSelfScore() - CostPenalty(1),
-            "Offering"       => EnergyScore(2) + DrawScore(3) - HpLossCost(6) + ExhaustSelfScore() - CostPenalty(0),
-            "PrimalForce"    => 5.0f - CostPenalty(0),
-            "SecondWind"     => ExhaustHandScore(2) + BlockScore(10, 1) - CostPenalty(1),
-            "Stoke"          => ExhaustHandScore(3) + DrawScore(3) + ExhaustSelfScore() - CostPenalty(1),
-            "TrueGrit"       => BlockScore(7, 1) + ExhaustHandScore(1) * 0.5f - CostPenalty(1),
-            "Unmovable"      => 4.0f - CostPenalty(2),
-            "Brand"          => ExhaustHandScore(1) + StrengthScore(1) - HpLossCost(1) - CostPenalty(0),
-            "Juggling"       => 3.5f - CostPenalty(1),
-            "Tremble"        => VulnerableScore(2) - CostPenalty(1),
+            // ── 技能牌 ────────────────────────────────────────────────────
+            "DefendIronclad" => Score(Blk(5), 1),
+            "ShrugItOff"     => Score(Blk(8) + DrawVal, 1),
+            "Armaments"      => Score(Blk(5) + 2.0f, 1),
+            "BattleTrance"   => Score(DrawVal * 3, 0),
+            "BloodWall"      => Score(Blk(16) - HpLoss(2), 2),
+            "Bloodletting"   => Score(EnergyVal * 2 - HpLoss(3), 0),
+            "BurningPact"    => Score(BurnVal + DrawVal * 2 + ExhaustVal, 1),
+            "Cascade"        => Score(DrawVal * 2, 0),
+            "Colossus"       => Score(Blk(5) + 2.0f, 1),
+            "DemonicShield"  => Score(Blk(8) + ExhaustVal - HpLoss(1), 0),
+            "Dominate"       => Score(StrVal * 3 + ExhaustVal, 1),
+            "EvilEye"        => Score(Blk(8), 1),
+            "ExpectAFight"   => Score(EnergyVal * 2, 2),
+            "FeelNoPain"     => Score(Blk(3) * 3, 1),   // 估算3次消耗
+            "FlameBarrier"   => Score(Blk(12), 2),
+            "ForgottenRitual"=> Score(EnergyVal * 3 - 1.0f, 1),
+            "Havoc"          => Score(BurnVal * 0.5f, 1),
+            "Impervious"     => Score(Blk(30) + ExhaustVal, 2),
+            "InfernalBlade"  => Score(Dmg(8, false, false, 0) + ExhaustVal, 1),
+            "Offering"       => Score(EnergyVal * 2 + DrawVal * 3 - HpLoss(6) + ExhaustVal, 0),
+            "PrimalForce"    => Score(Dmg(20, false, false, 0) * 0.7f, 0), // 条件性，打折
+            "SecondWind"     => Score(BurnVal * 2 + Blk(10), 1),
+            "Stoke"          => Score(BurnVal * 3 + DrawVal * 3 + ExhaustVal, 1),
+            "TrueGrit"       => Score(Blk(7) + BurnVal * 0.5f, 1),
+            "Unmovable"      => Score(Blk(7) * 2, 2),  // 翻倍格挡，估算
+            "Brand"          => Score(BurnVal + StrVal - HpLoss(1), 0),
+            "Juggling"       => Score(DrawVal * 2, 1),
+            "Tremble"        => Score(VulnVal * 2, 1),
 
-            // ── 能力牌（价值=预期触发价值，费用越高要求越高）──────────────
-            // 基准：N费能力牌需要产生 N×5 分的总价值才算合格
-            // 每回合触发价值 × 预期触发回合数（约3回合）- 费用标准
-            "Aggression"     => DrawScore(1) * 3f - 5f,          // 1费，每回合抽1攻击牌，3回合=4.5，-5=-0.5→给3分保底
-            "Barricade"      => 8.0f,                             // 3费，格挡永久保留，配合全身撞击价值极高
-            "CrimsonMantle"  => (BlockScore(8, 1) - HpLossCost(1)) * 3f - 5f, // 1费，每回合(8-0.5)×3=22.5-5=17.5
-            "Corruption"     => 10.0f,                            // 3费，所有技能牌0费消耗，极强
-            "Cruelty"        => VulnerableScore(1) * 3f - 5f,    // 1费，易伤时+25%伤害，需配合
-            "DarkEmbrace"    => DrawScore(1) * 3f - 10f,         // 2费，每次消耗抽1，3次=4.5-10=-5.5→给3分保底
-            "DemonForm"      => StrengthScore(2) * 3f - 15f,     // 3费，每回合+2力量，3回合=7.5-15=-7.5→给2分保底
-            "DrumOfBattle"   => DrawScore(1) * 3f - 0f,          // 0费，每回合烧顶+抽1，3回合=4.5
-            "Hellraiser"     => ExhaustHandScore(1) * 3f - 10f,  // 2费，每次攻击消耗顶牌，3次=4.5-10=-5.5→给2分保底
-            "Inflame"        => DrawScore(1) * 4f - 5f,          // 1费，每次给易伤抽牌，4次=6-5=1→给4分保底
-            "Inferno"        => (4.0f - HpLossCost(1)) * 3f - 5f, // 1费，每回合失血+AOE，3回合=10.5-5=5.5
-            "Juggernaut"     => 3.0f,                             // 2费，获得格挡时随机伤害，条件性
-            "OneTwoPunch"    => DrawScore(1) * 3f - 5f,          // 1费，每回合复制攻击牌，3回合=4.5-5=-0.5→给3分保底
-            "Pyre"           => EnergyScore(1) * 3f - 10f,       // 2费，每回合+1费，3回合=9-10=-1→给4分保底
-            "Rage"           => BlockScore(3, 1) * 4f - 0f,      // 0费，每次攻击+3格挡，4次=12
-            "Rupture"        => StrengthScore(1) * 4f - 5f,      // 1费，受伤时+1力量，4次=6-5=1→给4分保底
-            "Stampede"       => 4.0f,                             // 2费，每回合结束随机打出攻击牌
-            "StoneArmor"     => BlockScore(4, 1) * 3f - 5f,      // 1费，每回合+4护甲，3回合=12-5=7
-            "Tank"           => BlockScore(3, 1) * 3f - 5f,      // 1费，每回合+格挡，3回合=9-5=4
-            "Vicious"        => DrawScore(1) * 3f - 5f,          // 1费，给易伤时抽牌，3次=4.5-5=-0.5→给3分保底
+            // ── 能力牌 ────────────────────────────────────────────────────
+            "Aggression"     => PowerScore(DrawVal, 1),
+            "Barricade"      => Score(Blk(10) * 3, 3),  // 格挡永久保留，极高价值
+            "CrimsonMantle"  => PowerScore(Blk(8) - HpLoss(1), 1),
+            "Corruption"     => Score(EnergyVal * 5, 3),  // 所有技能0费，极强
+            "Cruelty"        => PowerScore(VulnVal * 2, 1),
+            "DarkEmbrace"    => PowerScore(DrawVal, 2),
+            "DemonForm"      => PowerScore(StrVal * 2, 3),
+            "DrumOfBattle"   => PowerScore(DrawVal + BurnVal * 0.3f, 0),
+            "Hellraiser"     => PowerScore(BurnVal, 2),
+            "Inflame"        => PowerScore(DrawVal * 2, 1),
+            "Inferno"        => PowerScore(Dmg(4, false, true, aoeCountInDeck) - HpLoss(1), 1),
+            "Juggernaut"     => PowerScore(Dmg(5, false, false, 0) * 0.5f, 2),
+            "OneTwoPunch"    => PowerScore(DrawVal, 1),
+            "Pyre"           => PowerScore(EnergyVal, 2),
+            "Rage"           => PowerScore(Blk(3) * 2, 0),  // 每次攻击+3格挡，估算2次/回合
+            "Rupture"        => PowerScore(StrVal, 1),
+            "Stampede"       => PowerScore(Dmg(7, false, false, 0) * 0.5f, 2),
+            "StoneArmor"     => PowerScore(Blk(4), 1),
+            "Tank"           => PowerScore(Blk(3), 1),
+            "Vicious"        => PowerScore(DrawVal, 1),
 
-            _ => 3.0f  // 未知卡默认分
+            _ => 3.0f
         };
-        return Math.Max(result, 1.0f);  // 保底1分
     }
 }
