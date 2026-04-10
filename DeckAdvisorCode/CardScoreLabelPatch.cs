@@ -18,7 +18,10 @@ public static class CardScoreLabelPatch
         var model = __instance.Model;
         if (model == null) return;
 
-        if (FindAncestor<NCardRewardSelectionScreen>(__instance) == null) return;
+        // 奖励界面 或 商店界面 均显示评分
+        bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
+        bool inShop   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCard>(__instance) != null;
+        if (!inReward && !inShop) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
             CardScorer.EvaluateFromReflection(__instance);
