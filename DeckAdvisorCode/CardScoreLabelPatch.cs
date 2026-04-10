@@ -11,6 +11,8 @@ public static class CardScoreLabelPatch
 {
     static void Postfix(NCard __instance)
     {
+        MainFile.Logger.Info($"DeckAdvisor: Postfix triggered card={__instance.Model?.GetType().Name ?? "null"} parent={__instance.GetParent()?.GetType().Name ?? "null"}");
+
         // 同步删除旧标签，避免 QueueFree 异步导致重叠
         var existing = __instance.GetParent()?.GetNodeOrNull<Label>("_DeckAdvisorScore");
         if (existing != null) existing.GetParent().RemoveChild(existing);
@@ -21,7 +23,7 @@ public static class CardScoreLabelPatch
         // 奖励界面 或 商店界面 均显示评分
         bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
         bool inShop   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCard>(__instance) != null;
-        MainFile.Logger.Info($"DeckAdvisor: UpdateVisuals card={model.GetType().Name} inReward={inReward} inShop={inShop} parent={__instance.GetParent()?.GetType().Name}");
+        MainFile.Logger.Info($"DeckAdvisor: card={model.GetType().Name} inReward={inReward} inShop={inShop} ancestors={GetAncestorChain(__instance)}");
         if (!inReward && !inShop) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
@@ -56,6 +58,20 @@ public static class CardScoreLabelPatch
             parent = parent.GetParent();
         }
         return null;
+    }
+
+    static string GetAncestorChain(Node node)
+    {
+        var parts = new System.Text.StringBuilder();
+        var parent = node.GetParent();
+        int depth = 0;
+        while (parent != null && depth < 8)
+        {
+            parts.Append(parent.GetType().Name).Append(" > ");
+            parent = parent.GetParent();
+            depth++;
+        }
+        return parts.ToString();
     }
 
     static Color GradeColor(string grade) => grade switch {
