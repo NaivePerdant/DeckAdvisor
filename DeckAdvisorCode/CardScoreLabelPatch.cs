@@ -11,8 +11,9 @@ public static class CardScoreLabelPatch
 {
     static void Postfix(NCard __instance)
     {
-        __instance.GetNodeOrNull<Label>("_DeckAdvisorScore")?.QueueFree();
-        __instance.GetParent()?.GetNodeOrNull<Label>("_DeckAdvisorScore")?.QueueFree();
+        // 同步删除旧标签，避免 QueueFree 异步导致重叠
+        var existing = __instance.GetParent()?.GetNodeOrNull<Label>("_DeckAdvisorScore");
+        if (existing != null) existing.GetParent().RemoveChild(existing);
 
         var model = __instance.Model;
         if (model == null) return;
