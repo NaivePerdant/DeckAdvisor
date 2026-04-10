@@ -27,7 +27,12 @@ public static class CardScoreLabelPatch
         if (!inReward && !inShop) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
-            CardScorer.EvaluateFromReflection(__instance);
+        {
+            if (inReward)
+                CardScorer.EvaluateFromReflection(__instance);
+            else
+                CardScorer.EvaluateShopCard(__instance);
+        }
 
         if (!CardScorer.Current.TryGetValue(model.Id, out var result)) return;
 

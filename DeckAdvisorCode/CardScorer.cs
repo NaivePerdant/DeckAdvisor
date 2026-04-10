@@ -176,6 +176,40 @@ public static class CardScorer
         }
     }
 
+    public static void EvaluateShopCard(MegaCrit.Sts2.Core.Nodes.Cards.NCard triggerCard)
+    {
+        try
+        {
+            var state = RunManager.Instance.DebugOnlyGetState();
+            if (state == null) return;
+            var player = state.Players.FirstOrDefault();
+            if (player == null) return;
+            var card = triggerCard.Model;
+            if (card == null) return;
+
+            var deck = player.Deck.Cards.ToList();
+            var deckNames = deck.Select(c => c.GetType().Name).ToHashSet();
+            int selfDmgCount  = deckNames.Count(n => SelfDamageCards.Contains(n));
+            bool hasCrimson   = deckNames.Contains("CrimsonMantle");
+            bool hasRupture   = deckNames.Contains("Rupture");
+            int vulnCount     = deckNames.Count(n => VulnerableCards.Contains(n));
+            int exhaustCount  = deckNames.Count(n => ExhaustCards.Contains(n));
+            int blockCount    = deckNames.Count(n => BlockCards.Contains(n));
+            bool isBleedBuild   = (hasRupture || hasCrimson) && selfDmgCount >= 1;
+            bool isVulnBuild    = vulnCount >= 2;
+            bool isExhaustBuild = exhaustCount >= 2;
+            bool isBlockBuild   = blockCount >= 2;
+
+            float s = ScoreCard(card, deck, deckNames, isBleedBuild, isVulnBuild, isExhaustBuild, isBlockBuild);
+            string grade = s >= 9f ? "S" : s >= 7f ? "A" : s >= 5f ? "B" : s >= 3f ? "C" : "D";
+            Current[card.Id] = (s, grade);
+        }
+        catch (Exception ex)
+        {
+            MainFile.Logger.Info($"DeckAdvisor: EvaluateShopCard failed: {ex.Message}");
+        }
+    }
+
     public static void EvaluateFromReflection(MegaCrit.Sts2.Core.Nodes.Cards.NCard triggerCard)
     {
         try
