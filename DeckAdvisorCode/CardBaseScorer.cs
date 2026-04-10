@@ -25,7 +25,17 @@ public static class CardBaseScorer
     const float WeakVal    = 1.0f;    // 施加虚弱
     const float StrVal     = 1.5f;    // +1力量
 
-    // 职业系数：战士攻击牌略高，防御牌略低
+    // ── 机制价值公式 ──────────────────────────────────────────────────────
+    // 覆甲N层：每回合结束+N格挡，层数每回合-1，总格挡 = N×(N+1)/2
+    static float PlatingVal(int n) => Blk(n * (n + 1) / 2f);
+    // 易伤N层：目标受到伤害+50%，持续N次攻击
+    static float VulnVal2(int stacks) => stacks * VulnVal;
+    // 力量N点：每次攻击+N伤害，持续全场，估算剩余5次攻击
+    static float StrengthVal(float amount) => amount * DmgCoeff * AttackMult * 5f;
+    // 狂怒（Rage）：每次打出攻击牌+N格挡，估算每回合2次攻击×3回合
+    static float RageVal(float amount) => Blk(amount) * 6f;
+    // 势不可当（Juggernaut）：每次获得格挡随机造成N伤害，估算每回合1次×3回合
+    static float JuggernautVal(float amount) => Dmg(amount, false, false, 0) * 3f * 0.5f; // 随机目标打折
     const float AttackMult = 1.1f;
     const float BlockMult  = 0.9f;
 
@@ -128,18 +138,18 @@ public static class CardBaseScorer
             "Corruption"     => Score(EnergyVal * 5, 3),  // 所有技能0费，极强
             "Cruelty"        => PowerScore(VulnVal * 2, 1),
             "DarkEmbrace"    => PowerScore(DrawVal, 2),
-            "DemonForm"      => PowerScore(StrVal * 2, 3),
+            "DemonForm"      => PowerScore(StrengthVal(2), 3),
             "DrumOfBattle"   => PowerScore(DrawVal + BurnVal * 0.3f, 0),
             "Hellraiser"     => PowerScore(BurnVal, 2),
             "Inflame"        => PowerScore(DrawVal * 2, 1),
             "Inferno"        => PowerScore(Dmg(4, false, true, aoeCountInDeck) - HpLoss(1), 1),
-            "Juggernaut"     => PowerScore(Dmg(5, false, false, 0) * 0.5f, 2),
+            "Juggernaut"     => PowerScore(JuggernautVal(5), 2),
             "OneTwoPunch"    => PowerScore(DrawVal, 1),
             "Pyre"           => PowerScore(EnergyVal, 2),
-            "Rage"           => PowerScore(Blk(3) * 2, 0),  // 每次攻击+3格挡，估算2次/回合
-            "Rupture"        => PowerScore(StrVal, 1),
+            "Rage"           => PowerScore(RageVal(3), 0),
+            "Rupture"        => PowerScore(StrengthVal(1), 1),
             "Stampede"       => PowerScore(Dmg(7, false, false, 0) * 0.5f, 2),
-            "StoneArmor"     => Score(Blk(4 + 3 + 2 + 1), 1),  // 护甲递减：4+3+2+1=10总格挡
+            "StoneArmor"     => Score(PlatingVal(4), 1),
             "Tank"           => PowerScore(Blk(3), 1),
             "Vicious"        => PowerScore(DrawVal, 1),
 
