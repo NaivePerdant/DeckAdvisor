@@ -29,32 +29,26 @@ public static class CardBaseScorer
     }
 
     // ── 功能价值 ─────────────────────────────────────────────────────────
-    static float DrawScore(int cards) => cards switch { 1 => 1.5f, 2 => 2.5f, 3 => 3.5f, _ => 3.5f + (cards - 3) * 0.8f };
+    static float DrawScore(int cards) => cards switch { 1 => 2.5f, 2 => 4.5f, 3 => 6.0f, _ => 6.0f + (cards - 3) * 1.2f };
     static float EnergyScore(int energy) => energy switch { 1 => 3.0f, 2 => 5.0f, 3 => 7.0f, _ => 7.0f };
     static float ExhaustSelfScore() => 1.0f;
     static float ExhaustHandScore(int cards) => cards * 1.5f;
-    static float SearchScore() => 1.5f;
-    // 格挡分：按费用基准，1费5格挡=5分
+    static float SearchScore() => 2.0f;
+    // 格挡分：1费4格挡=4分基准（每格挡1分），按费用缩放
     static float BlockScore(float block, int cost = 1) => cost switch
     {
-        0 => block * 2.0f,
-        1 => block * 1.0f,
-        2 => block * 0.5f,
-        _ => block * 0.33f,
+        0 => block * 1.6f,
+        1 => block * 0.8f,
+        2 => block * 0.4f,
+        _ => block * 0.27f,
     };
     static float VulnerableScore(int stacks) => stacks == 1 ? 1.0f : 1.8f;
     static float WeakScore() => 1.0f;
     static float StrengthScore(int amount) => amount == 1 ? 1.5f : 2.5f;
-
-    static float PowerCostPenalty(int cost) => cost switch
-    {
-        0 => 1.0f,
-        1 => 0f,
-        2 => -1.5f,
-        _ => -3.0f,
-    };
+    // 费用惩罚：每费 -5分（N费牌需要产生N×5分价值才合格）
+    static float CostPenalty(int cost) => cost * 5.0f;
     static float HpLossCost(float hp) => hp switch { <= 1 => 0.5f, <= 2 => 0.8f, <= 3 => 1.0f, <= 6 => 1.5f, _ => 2.0f };
-    static float ConditionCost() => 1.0f;   // 需要满足条件才能打出
+    static float ConditionCost() => 1.0f;
     static float RandomTargetCost() => 0.5f;
 
     // ── 每张卡的基础分 ───────────────────────────────────────────────────
@@ -98,35 +92,35 @@ public static class CardBaseScorer
             "Uppercut"       => DamageScore(13, 2, false, false, 0) + VulnerableScore(1) + WeakScore(), // 2费打13+虚弱+易伤
             "Whirlwind"      => DamageScore(5, 1, true, true, aoeCountInDeck),               // X费AOE多段，按1费算
 
-            // ── 技能牌 ──────────────────────────────────────────────────
-            "DefendIronclad" => BlockScore(5, 1),
-            "ShrugItOff"     => BlockScore(8, 1) + DrawScore(1),
-            "Armaments"      => BlockScore(5, 1) + 2.0f,
-            "BattleTrance"   => DrawScore(3),                                               // 0费抽3（本回合不能再抽）
-            "BloodWall"      => BlockScore(16, 2) - HpLossCost(2),
-            "Bloodletting"   => EnergyScore(2) - HpLossCost(3),                             // 0费+2费-失3血
-            "BurningPact"    => ExhaustHandScore(1) + DrawScore(2) + ExhaustSelfScore(),
-            "Cascade"        => 4.0f,
-            "Colossus"       => BlockScore(5, 1) + 2.0f,
-            "DemonicShield"  => 4.0f + ExhaustSelfScore() - HpLossCost(1),
-            "Dominate"       => StrengthScore(2) + ExhaustSelfScore(),
-            "EvilEye"        => BlockScore(8, 1),
-            "ExpectAFight"   => EnergyScore(1) * 0.8f,
-            "FeelNoPain"     => 3.0f,
-            "FlameBarrier"   => BlockScore(12, 2),
-            "ForgottenRitual"=> EnergyScore(3) - ConditionCost(),
-            "Havoc"          => ExhaustHandScore(1) * 0.5f,
-            "Impervious"     => BlockScore(30, 2) + ExhaustSelfScore(),
-            "InfernalBlade"  => 3.5f + ExhaustSelfScore(),
-            "Offering"       => EnergyScore(2) + DrawScore(3) - HpLossCost(6) + ExhaustSelfScore(),
-            "PrimalForce"    => 5.0f,
-            "SecondWind"     => ExhaustHandScore(2) + BlockScore(10, 1),
-            "Stoke"          => ExhaustHandScore(3) + DrawScore(3) + ExhaustSelfScore(),
-            "TrueGrit"       => BlockScore(7, 1) + ExhaustHandScore(1) * 0.5f,
-            "Unmovable"      => 4.0f,
-            "Brand"          => ExhaustHandScore(1) + StrengthScore(1) - HpLossCost(1),
-            "Juggling"       => 3.5f,
-            "Tremble"        => VulnerableScore(2),
+            // ── 技能牌（功能价值 - 费用标准）────────────────────────────
+            "DefendIronclad" => BlockScore(5, 1) - CostPenalty(1),
+            "ShrugItOff"     => BlockScore(8, 1) + DrawScore(1) - CostPenalty(1),
+            "Armaments"      => BlockScore(5, 1) + 2.0f - CostPenalty(1),
+            "BattleTrance"   => DrawScore(3) - CostPenalty(0),
+            "BloodWall"      => BlockScore(16, 2) - HpLossCost(2) - CostPenalty(2),
+            "Bloodletting"   => EnergyScore(2) - HpLossCost(3) - CostPenalty(0),
+            "BurningPact"    => ExhaustHandScore(1) + DrawScore(2) + ExhaustSelfScore() - CostPenalty(1),
+            "Cascade"        => 4.0f - CostPenalty(0),  // X费，按0费算
+            "Colossus"       => BlockScore(5, 1) + 2.0f - CostPenalty(1),
+            "DemonicShield"  => 4.0f + ExhaustSelfScore() - HpLossCost(1) - CostPenalty(0),
+            "Dominate"       => StrengthScore(2) + ExhaustSelfScore() - CostPenalty(1),
+            "EvilEye"        => BlockScore(8, 1) - CostPenalty(1),
+            "ExpectAFight"   => EnergyScore(1) * 0.8f - CostPenalty(2),
+            "FeelNoPain"     => 3.0f - CostPenalty(1),
+            "FlameBarrier"   => BlockScore(12, 2) - CostPenalty(2),
+            "ForgottenRitual"=> EnergyScore(3) - ConditionCost() - CostPenalty(1),
+            "Havoc"          => ExhaustHandScore(1) * 0.5f - CostPenalty(1),
+            "Impervious"     => BlockScore(30, 2) + ExhaustSelfScore() - CostPenalty(2),
+            "InfernalBlade"  => 3.5f + ExhaustSelfScore() - CostPenalty(1),
+            "Offering"       => EnergyScore(2) + DrawScore(3) - HpLossCost(6) + ExhaustSelfScore() - CostPenalty(0),
+            "PrimalForce"    => 5.0f - CostPenalty(0),
+            "SecondWind"     => ExhaustHandScore(2) + BlockScore(10, 1) - CostPenalty(1),
+            "Stoke"          => ExhaustHandScore(3) + DrawScore(3) + ExhaustSelfScore() - CostPenalty(1),
+            "TrueGrit"       => BlockScore(7, 1) + ExhaustHandScore(1) * 0.5f - CostPenalty(1),
+            "Unmovable"      => 4.0f - CostPenalty(2),
+            "Brand"          => ExhaustHandScore(1) + StrengthScore(1) - HpLossCost(1) - CostPenalty(0),
+            "Juggling"       => 3.5f - CostPenalty(1),
+            "Tremble"        => VulnerableScore(2) - CostPenalty(1),
 
             // ── 能力牌（价值=预期触发价值，费用越高要求越高）──────────────
             // 基准：N费能力牌需要产生 N×5 分的总价值才算合格
