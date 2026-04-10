@@ -9,87 +9,15 @@ public static class CardScorer
 {
     public static readonly Dictionary<ModelId, (float score, string grade)> Current = new();
 
-    // ── 基础分表（依据攻略评级） ──────────────────────────────────────────
-    static readonly Dictionary<string, float> BaseScores = new()
-    {
-        // SSS
-        { "Offering",       9.5f },
-        { "Stoke",          9.5f },
-        // SS
-        { "BurningPact",    8.5f },
-        { "Bloodletting",   8.5f },
-        { "TrueGrit",       8.5f },
-        { "PommelStrike",   8.5f },
-        { "ShrugItOff",     8.5f },
-        { "BattleTrance",   8.5f },
-        { "DarkEmbrace",    8.0f },
-        { "Armaments",      8.0f },
-        { "ExpectAFight",   8.0f },
-        // S
-        { "Inflame",        7.5f },
-        { "Thrash",         7.5f },
-        { "Rupture",        7.5f },
-        { "Conflagration",  7.5f },
-        { "TearAsunder",    7.5f },
-        { "CrimsonMantle",  7.5f },
-        { "Headbutt",       7.5f },
-        { "Pillage",        7.5f },
-        { "ForgottenRitual",7.5f },
-        { "Aggression",     7.0f },
-        { "Brand",          6.0f },
-        // A
-        { "Rage",           6.5f },
-        { "Taunt",          6.5f },
-        { "Dominate",       6.5f },
-        { "Barricade",      6.5f },
-        { "BodySlam",       6.5f },
-        { "Impervious",     6.5f },
-        { "Whirlwind",      6.5f },
-        { "Dismantle",      6.5f },
-        { "Bully",          6.5f },
-        { "Colossus",       6.5f },
-        { "SecondWind",     6.5f },
-        { "Unmovable",      6.5f },
-        { "Feed",           6.5f },
-        { "Hemokinesis",    6.0f },
-        { "Breakthrough",   6.0f },
-        { "Stampede",       6.0f },
-        { "Pyre",           6.0f },
-        { "FightMe",        6.0f },
-        { "Mangle",         6.0f },
-        { "Unrelenting",    6.0f },
-        { "PrimalForce",    6.0f },
-        { "FiendFire",      6.0f },
-        { "EvilEye",        6.0f },
-        // B
-        { "Spite",          5.0f },
-        { "TwinStrike",     5.0f },
-        { "Uppercut",       5.0f },
-        { "FlameBarrier",   5.0f },
-        { "BloodWall",      4.5f },
-        { "DrumOfBattle",   4.5f },
-        { "MoltenFist",     4.5f },
-        { "SwordBoomerang", 4.5f },
-        { "Rampage",        4.5f },
-        { "PactsEnd",       4.5f },
-        { "Cruelty",        4.5f },
-        // C
-        { "StoneArmor",     3.0f },
-        { "Juggernaut",     3.0f },
-        { "Inferno",        3.0f },
-        { "Hellraiser",     3.0f },
-        // D
-        { "InfernalBlade",  1.5f },
-        { "Cascade",        1.5f },
-        { "Bludgeon",       1.5f },
-        { "Havoc",          1.5f },
-    };
-
     // ── 流派检测阈值 ─────────────────────────────────────────────────────
     // 主动失血源（造成 Unblockable 自伤的牌，含绯红披风每回合自动触发）
     // 注意：好勇斗狠(Aggression)是从弃牌堆取攻击牌，不是失血
     static readonly HashSet<string> SelfDamageCards = new()
         { "Bloodletting", "BloodWall", "Breakthrough", "DemonicShield", "Hemokinesis", "Offering", "CrimsonMantle" };
+
+    // AOE 牌（影响基础分中的 AOE 加成）
+    static readonly HashSet<string> AoeCards = new()
+        { "Breakthrough", "Conflagration", "Thunderclap", "Stomp", "HowlFromBeyond", "PactsEnd", "Whirlwind" };
 
     // 易伤源（给敌人施加 Vulnerable 的牌）
     static readonly HashSet<string> VulnerableCards = new()
@@ -253,8 +181,9 @@ public static class CardScorer
     {
         string name = card.GetType().Name;
 
-        // 1. 基础分
-        float s = BaseScores.TryGetValue(name, out var baseScore) ? baseScore : DefaultScore(card);
+        // 1. 基础分（费效比+功能价值）
+        int aoeCount = deckNames.Count(n => AoeCards.Contains(n));
+        float s = CardBaseScorer.Calculate(name, aoeCount);
 
         // 2. 联动加分：deck 中已有的牌对当前候选牌加分
         foreach (var (key, rules) in Synergies)
@@ -298,14 +227,6 @@ public static class CardScorer
 
     static int vulnCount(HashSet<string> deckNames)  => deckNames.Count(n => VulnerableCards.Contains(n));
     static int bleedCount(HashSet<string> deckNames) => deckNames.Count(n => SelfDamageCards.Contains(n));
-
-    // 未在表中的卡用稀有度给默认分
-    static float DefaultScore(CardModel card) => card.Rarity switch
-    {
-        CardRarity.Rare     => 5.0f,
-        CardRarity.Uncommon => 4.0f,
-        _                   => 3.0f,
-    };
 
     static List<CardModel>? FindRewardCards(MegaCrit.Sts2.Core.Nodes.Cards.NCard triggerCard)
     {
