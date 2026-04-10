@@ -34,7 +34,14 @@ public static class CardBaseScorer
     static float ExhaustSelfScore() => 1.0f;
     static float ExhaustHandScore(int cards) => cards * 1.5f;
     static float SearchScore() => 1.5f;
-    static float BlockScore(float block) => block * 0.3f;
+    // 格挡分：按费用基准，1费5格挡=5分
+    static float BlockScore(float block, int cost = 1) => cost switch
+    {
+        0 => block * 2.0f,
+        1 => block * 1.0f,
+        2 => block * 0.5f,
+        _ => block * 0.33f,
+    };
     static float VulnerableScore(int stacks) => stacks == 1 ? 1.0f : 1.8f;
     static float WeakScore() => 1.0f;
     static float StrengthScore(int amount) => amount == 1 ? 1.5f : 2.5f;
@@ -65,7 +72,7 @@ public static class CardBaseScorer
             "Headbutt"       => DamageScore(9, 1, false, false, 0) + SearchScore(),          // 1费打9+检索
             "Hemokinesis"    => DamageScore(14, 1, false, false, 0) - HpLossCost(2),         // 1费打14-失2血
             "HowlFromBeyond" => DamageScore(16, 3, false, true, aoeCountInDeck) + ExhaustSelfScore(), // 3费AOE16消耗
-            "IronWave"       => DamageScore(5, 1, false, false, 0) + BlockScore(5),          // 1费打5+5格挡
+            "IronWave"       => DamageScore(5, 1, false, false, 0) + BlockScore(5, 1),          // 1费打5+5格挡
             "Mangle"         => DamageScore(15, 3, false, false, 0),                         // 3费打15+敌人-10力量
             "MoltenFist"     => DamageScore(10, 1, false, false, 0) + ExhaustSelfScore(),    // 1费打10消耗+翻倍易伤
             "PactsEnd"       => DamageScore(17, 0, false, true, aoeCountInDeck) - ConditionCost(), // 0费AOE17需消耗堆≥3
@@ -86,30 +93,30 @@ public static class CardBaseScorer
             "Whirlwind"      => DamageScore(5, 1, true, true, aoeCountInDeck),               // X费AOE多段，按1费算
 
             // ── 技能牌 ──────────────────────────────────────────────────
-            "DefendIronclad" => BlockScore(5),                                               // 1费5格挡
-            "ShrugItOff"     => BlockScore(8) + DrawScore(1),                               // 1费8格挡+抽1
-            "Armaments"      => BlockScore(5) + 2.0f,                                       // 1费5格挡+升级手牌
+            "DefendIronclad" => BlockScore(5, 1),
+            "ShrugItOff"     => BlockScore(8, 1) + DrawScore(1),
+            "Armaments"      => BlockScore(5, 1) + 2.0f,
             "BattleTrance"   => DrawScore(3),                                               // 0费抽3（本回合不能再抽）
-            "BloodWall"      => BlockScore(16) - HpLossCost(2),                             // 2费16格挡-失2血
+            "BloodWall"      => BlockScore(16, 2) - HpLossCost(2),
             "Bloodletting"   => EnergyScore(2) - HpLossCost(3),                             // 0费+2费-失3血
             "BurningPact"    => ExhaustHandScore(1) + DrawScore(2) + ExhaustSelfScore(),
             "Cascade"        => 4.0f,
-            "Colossus"       => BlockScore(5) + 2.0f,
+            "Colossus"       => BlockScore(5, 1) + 2.0f,
             "DemonicShield"  => 4.0f + ExhaustSelfScore() - HpLossCost(1),
             "Dominate"       => StrengthScore(2) + ExhaustSelfScore(),
-            "EvilEye"        => BlockScore(8),
+            "EvilEye"        => BlockScore(8, 1),
             "ExpectAFight"   => EnergyScore(1) * 0.8f,
             "FeelNoPain"     => 3.0f,
-            "FlameBarrier"   => BlockScore(12),
+            "FlameBarrier"   => BlockScore(12, 2),
             "ForgottenRitual"=> EnergyScore(3) - ConditionCost(),
             "Havoc"          => ExhaustHandScore(1) * 0.5f,
-            "Impervious"     => BlockScore(30) + ExhaustSelfScore(),
+            "Impervious"     => BlockScore(30, 2) + ExhaustSelfScore(),
             "InfernalBlade"  => 3.5f + ExhaustSelfScore(),
             "Offering"       => EnergyScore(2) + DrawScore(3) - HpLossCost(6) + ExhaustSelfScore(),
             "PrimalForce"    => 5.0f,
-            "SecondWind"     => ExhaustHandScore(2) + BlockScore(10),
+            "SecondWind"     => ExhaustHandScore(2) + BlockScore(10, 1),
             "Stoke"          => ExhaustHandScore(3) + DrawScore(3) + ExhaustSelfScore(),
-            "TrueGrit"       => BlockScore(7) + ExhaustHandScore(1) * 0.5f,
+            "TrueGrit"       => BlockScore(7, 1) + ExhaustHandScore(1) * 0.5f,
             "Unmovable"      => 4.0f,
             "Brand"          => ExhaustHandScore(1) + StrengthScore(1) - HpLossCost(1),
             "Juggling"       => 3.5f,
@@ -118,7 +125,7 @@ public static class CardBaseScorer
             // ── 能力牌 ──────────────────────────────────────────────────
             "Aggression"     => DrawScore(1) + 1.0f,
             "Barricade"      => 5.0f,
-            "CrimsonMantle"  => BlockScore(8) - HpLossCost(1) + 1.0f,
+            "CrimsonMantle"  => BlockScore(8, 1) - HpLossCost(1) + 1.0f,
             "Corruption"     => 6.0f,
             "Cruelty"        => 3.0f,
             "DarkEmbrace"    => DrawScore(1) + 1.0f,
@@ -130,10 +137,10 @@ public static class CardBaseScorer
             "Juggernaut"     => 3.0f,
             "OneTwoPunch"    => DrawScore(1) + 1.0f,
             "Pyre"           => EnergyScore(1) * 2f,
-            "Rage"           => BlockScore(3) * 2f,
+            "Rage"           => BlockScore(3, 1) * 2f,
             "Rupture"        => StrengthScore(1) * 2f,
             "Stampede"       => 4.0f,
-            "StoneArmor"     => BlockScore(4) * 2f,
+            "StoneArmor"     => BlockScore(4, 1) * 2f,
             "Tank"           => 3.5f,
             "Vicious"        => DrawScore(1) * 1.5f,
 
