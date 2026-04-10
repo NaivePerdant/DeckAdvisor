@@ -120,15 +120,14 @@ public static class CardScorer
     static readonly HashSet<string> MaxTwo = new()
         { "Bloodletting", "BurningPact", "PommelStrike", "ShrugItOff" };
 
-    // 前期强/后期弱的牌：楼层越高降分
-    // 每超过阈值楼层降 penaltyPerFloor 分
-    static readonly Dictionary<string, (int thresholdFloor, float penaltyPerFloor)> EarlyGameCards = new()
+    // 前期强/后期弱的牌：关卡越高降分（actIndex: 0=第一关, 1=第二关, 2=第三关）
+    static readonly Dictionary<string, (int thresholdAct, float penalty)> EarlyGameCards = new()
     {
-        { "Mangle",       (10, 0.3f) },  // 攻略：抓的早不错，后面抓到不考虑
-        { "Breakthrough", (12, 0.2f) },  // 攻略：一层可以无脑抓，一层以后抓取位有所下降
-        { "Unrelenting",  (12, 0.2f) },  // 攻略：一层推荐抓取，二层缺输出也可以
-        { "PrimalForce",  (15, 0.2f) },  // 攻略：过渡舒服，后期价值下降
-        { "Thrash",       (10, 0.2f) },  // 攻略：一层最强过渡，二层起贬值
+        { "Mangle",       (1, 3.0f) },  // 攻略：抓的早不错，后面抓到不考虑
+        { "Breakthrough", (1, 1.5f) },  // 攻略：一层可以无脑抓，一层以后抓取位有所下降
+        { "Unrelenting",  (1, 1.0f) },  // 攻略：一层推荐抓取，二层缺输出也可以
+        { "PrimalForce",  (2, 1.5f) },  // 攻略：过渡舒服，后期价值下降
+        { "Thrash",       (1, 2.0f) },  // 攻略：一层最强过渡，二层起贬值
     };
 
     static readonly Dictionary<string, (HashSet<string> targets, float bonus)[]> Synergies = new()
@@ -169,9 +168,7 @@ public static class CardScorer
         Current.Clear();
         var deck = player.Deck.Cards.ToList();
         var deckNames = deck.Select(c => c.GetType().Name).ToHashSet();
-        int floor = player.RunState?.TotalFloor ?? 0;
-
-        // 检测流派倾向
+        int floor = player.RunState?.CurrentActIndex ?? 0;
         int selfDmgCount  = deckNames.Count(n => SelfDamageCards.Contains(n));
         bool hasCrimson   = deckNames.Contains("CrimsonMantle");
         bool hasRupture   = deckNames.Contains("Rupture");
@@ -206,7 +203,7 @@ public static class CardScorer
 
             var deck = player.Deck.Cards.ToList();
             var deckNames = deck.Select(c => c.GetType().Name).ToHashSet();
-            int floor = player.RunState?.TotalFloor ?? 0;
+            int floor = player.RunState?.CurrentActIndex ?? 0;
             int selfDmgCount  = deckNames.Count(n => SelfDamageCards.Contains(n));
             bool hasCrimson   = deckNames.Contains("CrimsonMantle");
             bool hasRupture   = deckNames.Contains("Rupture");
@@ -292,9 +289,9 @@ public static class CardScorer
         // 战鼓随机烧牌有风险，卡组有关键牌时降分
         if (name == "DrumOfBattle" && deck.Count > 12)                s -= 1.0f;
 
-        // 楼层惩罚：前期强牌在后期降分
-        if (EarlyGameCards.TryGetValue(name, out var earlyGame) && floor > earlyGame.thresholdFloor)
-            s -= (floor - earlyGame.thresholdFloor) * earlyGame.penaltyPerFloor;
+        // 关卡惩罚：前期强牌在后期降分
+        if (EarlyGameCards.TryGetValue(name, out var earlyGame) && floor > earlyGame.thresholdAct)
+            s -= earlyGame.penalty;
 
         return Math.Clamp(s, 0f, 10f);
     }
