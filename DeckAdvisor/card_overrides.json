@@ -2,23 +2,23 @@
   "_readme": "note 为选牌建议，显示在卡牌下方。scoreOverride 填数字可覆盖算法分，null 则用算法。",
   "Aggression": {
     "scoreOverride": null,
-    "note": "运转核心，每回合从弃牌堆取攻击牌并升级，拿1张",
+    "note": "优先拿，拿1张",
     "zh": "好勇斗狠"
   },
   "Anger": {
     "scoreOverride": null,
-    "note": "攻击过渡，0费，卡组里有[劫掠]时可拿，拿1张",
+    "note": "0费，卡组里有[劫掠]时可拿，拿1张",
     "zh": "愤怒"
   },
   "Armaments": {
     "scoreOverride": null,
-    "note": "运转核心，优先拿，白螺很多敲位，拿1张",
+    "note": "优先拿，白螺很多敲位，拿1张",
     "zh": "武装"
   },
   "AshenStrike": {
     "zh": "灰烬打击",
     "scoreOverride": null,
-    "note": "消耗流过渡，卡组里有[黑暗之拥]等消耗体系时价值提升，消耗堆越多伤害越高，拿1张"
+    "note": "卡组里有消耗体系时价值提升，拿1张"
   },
   "Barricade": {
     "scoreOverride": null,
@@ -27,27 +27,27 @@
   },
   "Bash": {
     "scoreOverride": null,
-    "note": "初始牌，可升级为[破击]，升级前优先级低，拿0张",
+    "note": "可升级为[破击]，升级前优先级低，拿0张",
     "zh": "痛击"
   },
   "BattleTrance": {
     "scoreOverride": null,
-    "note": "运转核心，见到必抓，拿1张",
+    "note": "见到必抓，拿1张",
     "zh": "战斗专注"
   },
   "BloodWall": {
     "scoreOverride": null,
-    "note": "自残流防御，卡组里有[撕裂]时价值提升，拿1张",
+    "note": "自残流可拿，卡组里有[撕裂]时价值提升，拿1张",
     "zh": "血墙"
   },
   "Bloodletting": {
     "scoreOverride": null,
-    "note": "循环核心，必拿，卡组里有[剑柄打击]时可无限，拿1-2张",
+    "note": "必拿，卡组里有[剑柄打击]时可无限，拿1-2张",
     "zh": "放血"
   },
   "Bludgeon": {
     "scoreOverride": null,
-    "note": "攻击过渡，一层强，卡组里有[无情猛攻]时价值提升，二层后不拿，拿1张",
+    "note": "一层强，二层后不拿，拿1张",
     "zh": "重锤"
   },
   "BodySlam": {
@@ -57,27 +57,27 @@
   },
   "Brand": {
     "scoreOverride": null,
-    "note": "自残流烧牌，0费，卡组里有[撕裂]、[黑暗之拥]时价值提升，拿1张",
+    "note": "0费，卡组里有[撕裂]、[黑暗之拥]时价值提升，拿1张",
     "zh": "烙印"
   },
   "Break": {
     "zh": "破击",
     "scoreOverride": null,
-    "note": "易伤流终端，远古牌，卡组里有[凶恶]等易伤体系时优先拿，2费打20+5层易伤，拿1张"
+    "note": "易伤流终端，远古牌，卡组里有易伤体系时优先拿，拿1张"
   },
   "Breakthrough": {
     "scoreOverride": null,
-    "note": "自残流过渡，一层无脑拿，一层后抓位下降，拿1张",
+    "note": "一层无脑拿，一层后抓位下降，拿1张",
     "zh": "突破"
   },
   "Bully": {
     "scoreOverride": null,
-    "note": "易伤流终端，卡组里有[凶恶]等易伤体系时优先拿，无易伤时不拿，拿1张",
+    "note": "易伤流终端，卡组里有易伤体系时优先拿，无易伤时不拿，拿1张",
     "zh": "欺凌"
   },
   "BurningPact": {
     "scoreOverride": null,
-    "note": "烧牌核心，无脑拿，终端烧牌组件，拿1-2张",
+    "note": "无脑拿，拿1-2张",
     "zh": "燃烧契约"
   },
   "Cascade": {
@@ -88,16 +88,16 @@
   "Cinder": {
     "zh": "余烬",
     "scoreOverride": null,
-    "note": "消耗流过渡，卡组里有[黑暗之拥]时价值提升，2费打17并消耗牌堆顶，拿1张"
+    "note": "卡组里有[黑暗之拥]时价值提升，拿1张"
   },
   "Colossus": {
     "scoreOverride": null,
-    "note": "易伤流防御，卡组里有易伤体系时才值，降低易伤敌人伤害50%，拿1张",
+    "note": "卡组里有易伤体系时才值，拿1张",
     "zh": "巨像"
   },
   "Conflagration": {
     "scoreOverride": null,
-    "note": "攻击过渡，卡组里有多张攻击牌时价值高，本回合攻击牌越多越强，拿1张",
+    "note": "卡组里有多张攻击牌时价值高，拿1张",
     "zh": "焚烧"
   },
   "Corruption": {
@@ -107,107 +107,107 @@
   },
   "CrimsonMantle": {
     "scoreOverride": null,
-    "note": "自残流核心，卡组里有[撕裂]时必拿，自动触发撕裂叠力量，拿1张",
+    "note": "自残流核心，卡组里有[撕裂]时必拿，拿1张",
     "zh": "绯红披风"
   },
   "Cruelty": {
     "scoreOverride": null,
-    "note": "易伤流增伤，卡组里有易伤体系时后期补强，前期不拿，拿1张",
+    "note": "易伤流后期补强，前期不拿，拿1张",
     "zh": "残酷"
   },
   "DarkEmbrace": {
     "scoreOverride": null,
-    "note": "消耗流核心，优先拿，卡组里有[添柴]、[燃烧契约]、[重振精神]时必拿，拿1张",
+    "note": "卡组里有[添柴]、[燃烧契约]、[重振精神]时必拿，拿1张",
     "zh": "黑暗之拥"
   },
   "DefendIronclad": {
     "scoreOverride": null,
-    "note": "通用过渡，可被[重振精神]消耗，不要无脑删，拿0张",
+    "note": "不要无脑删，可被[重振精神]消耗，拿0张",
     "zh": "防御"
   },
   "DemonForm": {
     "scoreOverride": null,
-    "note": "力量核心，3费，长线才值，卡组里有多段攻击时优先拿，前期不拿，拿1张",
+    "note": "3费，长线才值，前期不拿，拿1张",
     "zh": "恶魔形态"
   },
   "DemonicShield": {
     "scoreOverride": null,
-    "note": "自残流防御，0费消耗，卡组里有[撕裂]、[黑暗之拥]时价值提升，拿1张",
+    "note": "0费消耗，卡组里有[撕裂]、[黑暗之拥]时价值提升，拿1张",
     "zh": "恶魔护盾"
   },
   "Dismantle": {
     "scoreOverride": null,
-    "note": "易伤流过渡，卡组里有易伤体系时优先拿，有易伤打2次，拿1张",
+    "note": "易伤流过渡，卡组里有易伤体系时优先拿，拿1张",
     "zh": "拆卸"
   },
   "Dominate": {
     "scoreOverride": null,
-    "note": "易伤流核心，卡组里有[凶恶]、[挑衅]等易伤源时必拿，必须升级去消耗，拿1张",
+    "note": "易伤流核心，卡组里有[凶恶]、[挑衅]等易伤源时必拿，必须升级，拿1张",
     "zh": "主宰"
   },
   "DrumOfBattle": {
     "scoreOverride": null,
-    "note": "运转核心，刚需SL防止烧核心，能接受SL才拿，拿1张",
+    "note": "刚需SL防止烧核心，能接受SL才拿，拿1张",
     "zh": "战鼓"
   },
   "EvilEye": {
     "scoreOverride": null,
-    "note": "格挡流防御，卡组里有消耗体系时价值翻倍，拿1张",
+    "note": "卡组里有消耗体系时价值翻倍，拿1张",
     "zh": "邪眼"
   },
   "ExpectAFight": {
     "scoreOverride": null,
-    "note": "循环核心，优先拿，攻杀流加费，拿1-2张",
+    "note": "攻杀流优先拿，拿1-2张",
     "zh": "跃跃欲试"
   },
   "Feed": {
     "scoreOverride": null,
-    "note": "通用核心，越早拿越好，击杀永久+3血上限，拿1张",
+    "note": "越早拿越好，拿1张",
     "zh": "狂宴"
   },
   "FeelNoPain": {
     "scoreOverride": null,
-    "note": "消耗流防御，卡组里有[黑暗之拥]、[腐化]等消耗体系时优先拿，拿1张",
+    "note": "卡组里有[黑暗之拥]、[腐化]等消耗体系时优先拿，拿1张",
     "zh": "无惧疼痛"
   },
   "FiendFire": {
     "scoreOverride": null,
-    "note": "消耗流终端，卡组里有消耗体系时优先拿，消耗所有手牌×7伤，拿1张",
+    "note": "消耗流终端，卡组里有消耗体系时优先拿，拿1张",
     "zh": "恶魔之焰"
   },
   "FightMe": {
     "scoreOverride": null,
-    "note": "攻击过渡，卡组里有[飞剑回旋镖]、[双重打击]时价值提升，给敌人力量有风险，拿1张",
+    "note": "卡组里有[飞剑回旋镖]、[双重打击]时价值提升，给敌人力量有风险，拿1张",
     "zh": "与我一战！"
   },
   "FlameBarrier": {
     "scoreOverride": null,
-    "note": "格挡流防御，卡组里有格挡体系时可拿，格挡+反伤，拿1张",
+    "note": "格挡流可拿，拿1张",
     "zh": "火焰屏障"
   },
   "ForgottenRitual": {
     "scoreOverride": null,
-    "note": "循环核心，优先拿，卡组里有消耗体系时可搭配真无限，拿1张",
+    "note": "卡组里有消耗体系时可搭配真无限，拿1张",
     "zh": "被遗忘的仪式"
   },
   "Grapple": {
     "scoreOverride": null,
-    "note": "攻击过渡，降低目标格挡获取，一般不优先，拿1张",
+    "note": "一般不优先，拿1张",
     "zh": "擒拿"
   },
   "Havoc": {
     "scoreOverride": null,
-    "note": "随机烧牌，陷阱，一般不拿，拿0张",
+    "note": "随机陷阱，不推荐，拿0张",
     "zh": "破灭"
   },
   "Headbutt": {
     "scoreOverride": null,
-    "note": "运转核心，拿1张，可检索[主宰]、[放血]等核心牌",
+    "note": "拿1张，可检索[主宰]、[放血]等核心牌",
     "zh": "头槌"
   },
   "Hellraiser": {
     "scoreOverride": null,
-    "note": "消耗流核心，2费，卡组里有[劫掠]时后期无限用，拿1张",
+    "note": "2费，卡组里有[劫掠]时后期无限用，拿1张",
     "zh": "地狱狂徒"
   },
   "Hemokinesis": {
@@ -217,12 +217,12 @@
   },
   "HowlFromBeyond": {
     "scoreOverride": null,
-    "note": "消耗流过渡，卡组里有消耗体系时可拿，消耗后每回合自动打出，拿1张",
+    "note": "卡组里有消耗体系时可拿，拿1张",
     "zh": "彼岸咆哮"
   },
   "Impervious": {
     "scoreOverride": null,
-    "note": "格挡流防御，战士缺防时必拿，消耗，拿1张",
+    "note": "战士缺防时必拿，消耗，拿1张",
     "zh": "岿然不动"
   },
   "InfernalBlade": {
@@ -232,52 +232,52 @@
   },
   "Inferno": {
     "scoreOverride": null,
-    "note": "自残流AOE，卡组里有[放血]、[祭品]等失血牌时价值提升，拿1张",
+    "note": "卡组里有[放血]、[祭品]等失血牌时价值提升，拿1张",
     "zh": "狱火"
   },
   "Inflame": {
     "scoreOverride": null,
-    "note": "力量核心，卡组里有[双重打击]、[旋风斩]等多段攻击时价值提升，拿1张",
+    "note": "卡组里有[双重打击]、[旋风斩]等多段攻击时价值提升，拿1张",
     "zh": "燃烧"
   },
   "IronWave": {
     "scoreOverride": null,
-    "note": "攻击过渡，攻防兼备但不上不下，一般不优先，拿1张",
+    "note": "攻防兼备但不上不下，一般不优先，拿1张",
     "zh": "铁斩波"
   },
   "Juggernaut": {
     "scoreOverride": null,
-    "note": "格挡流增伤，卡组里有大量格挡来源时才值，拿1张",
+    "note": "卡组里有大量格挡来源时才值，拿1张",
     "zh": "势不可当"
   },
   "Juggling": {
     "scoreOverride": null,
-    "note": "运转核心，卡组里有0费牌时更强，拿1张",
+    "note": "卡组里有0费牌时更强，拿1张",
     "zh": "杂耍"
   },
   "Mangle": {
     "scoreOverride": null,
-    "note": "力量过渡，一层拿，后面不考虑，拿1张",
+    "note": "一层拿，后面不考虑，拿1张",
     "zh": "凌虐"
   },
   "MoltenFist": {
     "scoreOverride": null,
-    "note": "易伤流终端，卡组里有[主宰]时必拿，翻倍易伤后主宰收割大量力量，消耗，拿1-2张",
+    "note": "易伤流终端，卡组里有[主宰]时必拿，消耗，拿1-2张",
     "zh": "熔融之拳"
   },
   "Offering": {
     "scoreOverride": null,
-    "note": "通用核心，无脑拿，优先升级，拿1张",
+    "note": "无脑拿，优先升级，拿1张",
     "zh": "祭品"
   },
   "OneTwoPunch": {
     "scoreOverride": null,
-    "note": "运转核心，每回合复制弃牌堆顶攻击牌，拿1张",
+    "note": "优先拿，拿1张",
     "zh": "连环拳"
   },
   "PactsEnd": {
     "scoreOverride": null,
-    "note": "消耗流终端，卡组里有消耗体系时优先拿，消耗堆≥3张才可打，拿1张",
+    "note": "消耗流终端，卡组里有消耗体系时优先拿，拿1张",
     "zh": "契约终结"
   },
   "PerfectedStrike": {
@@ -287,97 +287,97 @@
   },
   "Pillage": {
     "scoreOverride": null,
-    "note": "循环核心，优先拿，劫掠流核心，拿1-2张",
+    "note": "优先拿，劫掠流核心，拿1-2张",
     "zh": "劫掠"
   },
   "PommelStrike": {
     "scoreOverride": null,
-    "note": "循环核心，无脑拿，卡组里有[放血]时可无限，拿1-2张",
+    "note": "无脑拿，卡组里有[放血]时可无限，拿1-2张",
     "zh": "剑柄打击"
   },
   "PrimalForce": {
     "scoreOverride": null,
-    "note": "攻击过渡，0费，过渡舒服，后期价值下降，拿1张",
+    "note": "0费，过渡舒服，后期价值下降，拿1张",
     "zh": "原始力量"
   },
   "Pyre": {
     "scoreOverride": null,
-    "note": "循环核心，长线回费，优先拿，升级+2费，拿1张",
+    "note": "长线回费，优先拿，升级+2费，拿1张",
     "zh": "薪火之源"
   },
   "Rage": {
     "scoreOverride": null,
-    "note": "攻杀流防御，0费，卡组里有攻击牌时价值高，拿1张",
+    "note": "0费，攻杀流优先拿，拿1张",
     "zh": "狂怒"
   },
   "Rampage": {
     "scoreOverride": null,
-    "note": "力量过渡，消耗，抓的早不错，拿1张",
+    "note": "消耗，抓的早不错，拿1张",
     "zh": "暴走"
   },
   "Rupture": {
     "scoreOverride": null,
-    "note": "自残流核心，卡组里有[放血]、[祭品]、[绯红披风]等失血牌时必拿，拿1张",
+    "note": "自残流核心，卡组里有[放血]、[祭品]、[绯红披风]时必拿，拿1张",
     "zh": "撕裂"
   },
   "SecondWind": {
     "scoreOverride": null,
-    "note": "烧牌核心，优先拿，卡组里有攻击牌时价值高，拿1-2张",
+    "note": "优先拿，卡组里有攻击牌时价值高，拿1-2张",
     "zh": "重振精神"
   },
   "SetupStrike": {
     "scoreOverride": null,
-    "note": "力量过渡，卡组里有[双重打击]、[旋风斩]时价值提升，拿1张",
+    "note": "卡组里有[双重打击]、[旋风斩]时价值提升，拿1张",
     "zh": "预备打击"
   },
   "ShrugItOff": {
     "scoreOverride": null,
-    "note": "通用过渡，基本要抓，战士缺防，拿1-2张",
+    "note": "基本要抓，战士缺防，拿1-2张",
     "zh": "耸肩无视"
   },
   "Spite": {
     "scoreOverride": null,
-    "note": "攻击过渡，0费，卡组里有自残体系时价值提升，拿1张",
+    "note": "0费，卡组里有自残体系时价值提升，拿1张",
     "zh": "怨恨"
   },
   "Stampede": {
     "scoreOverride": null,
-    "note": "运转核心，升级降1费，后期无限用，拿1张",
+    "note": "升级降1费，后期无限用，拿1张",
     "zh": "惊逃"
   },
   "Stoke": {
     "scoreOverride": null,
-    "note": "烧牌核心，无脑拿，优先升级，拿1张",
+    "note": "无脑拿，优先升级，拿1张",
     "zh": "添柴"
   },
   "Stomp": {
     "scoreOverride": null,
-    "note": "攻击过渡，3费AOE，卡组里有多张攻击牌时价值高，拿1张",
+    "note": "3费AOE，卡组里有多张攻击牌时价值高，拿1张",
     "zh": "踩踏"
   },
   "StoneArmor": {
     "scoreOverride": null,
-    "note": "防御过渡，覆甲递减，总格挡有限，一般不优先，拿1张",
+    "note": "覆甲递减，总格挡有限，一般不优先，拿1张",
     "zh": "岩石铠甲"
   },
   "StrikeIronclad": {
     "scoreOverride": null,
-    "note": "通用过渡，可听[完美打击]、[劫掠]、[跃跃欲试]，不要无脑删，拿0张",
+    "note": "不要无脑删，可听[完美打击]、[劫掠]、[跃跃欲试]，拿0张",
     "zh": "打击"
   },
   "SwordBoomerang": {
     "scoreOverride": null,
-    "note": "攻击过渡，多段随机目标，吃力量加成，拿1张",
+    "note": "多段随机目标，拿1张",
     "zh": "飞剑回旋镖"
   },
   "Tank": {
     "scoreOverride": null,
-    "note": "防御过渡，升级降1费，格挡流可拿，拿1张",
+    "note": "升级降1费，格挡流可拿，拿1张",
     "zh": "肉盾"
   },
   "Taunt": {
     "scoreOverride": null,
-    "note": "易伤流核心，卡组里有[凶恶]时必拿，格挡+易伤双端，拿1-2张",
+    "note": "易伤流核心，卡组里有[凶恶]时必拿，拿1-2张",
     "zh": "挑衅"
   },
   "TearAsunder": {
@@ -387,27 +387,27 @@
   },
   "Thrash": {
     "scoreOverride": null,
-    "note": "攻击过渡，一层最强过渡，卡组里有攻击牌时价值高，二层起贬值，拿1张",
+    "note": "一层最强过渡，二层起贬值，拿1张",
     "zh": "痛殴"
   },
   "Thunderclap": {
     "scoreOverride": null,
-    "note": "易伤流核心，卡组里有[凶恶]时必拿，群体易伤，拿1张",
+    "note": "易伤流核心，卡组里有[凶恶]时必拿，拿1张",
     "zh": "闪电霹雳"
   },
   "Tremble": {
     "scoreOverride": null,
-    "note": "易伤流过渡，卡组里有[凶恶]时价值提升，拿1张",
+    "note": "卡组里有[凶恶]时价值提升，拿1张",
     "zh": "战栗"
   },
   "TrueGrit": {
     "scoreOverride": null,
-    "note": "烧牌核心，优先拿，升级后可定向消耗，拿1-2张",
+    "note": "优先拿，升级后可定向消耗，拿1-2张",
     "zh": "坚毅"
   },
   "TwinStrike": {
     "scoreOverride": null,
-    "note": "攻击过渡，多段吃力量/易伤，卡组里有[预备打击]时价值提升，拿1张",
+    "note": "多段，卡组里有[预备打击]时价值提升，拿1张",
     "zh": "双重打击"
   },
   "Unmovable": {
@@ -417,22 +417,22 @@
   },
   "Unrelenting": {
     "scoreOverride": null,
-    "note": "攻击过渡，一层推荐，卡组里有[上勾拳]、[重锤]时价值提升，拿1张",
+    "note": "一层推荐，卡组里有[上勾拳]、[重锤]时价值提升，拿1张",
     "zh": "无情猛攻"
   },
   "Uppercut": {
     "scoreOverride": null,
-    "note": "易伤流过渡，战士唯一虚弱，卡组里有[无情猛攻]时优先级提升，1层可拿，拿1张",
+    "note": "战士唯一虚弱，卡组里有[无情猛攻]时优先级提升，1层可拿，拿1张",
     "zh": "上勾拳"
   },
   "Vicious": {
     "scoreOverride": null,
-    "note": "易伤流引擎，先拿凶恶再拿易伤源，卡组里有[挑衅]、[闪电霹雳]时必拿，拿1张",
+    "note": "易伤流引擎，先拿[凶恶]再拿易伤源，卡组里有[挑衅]、[闪电霹雳]时必拿，拿1张",
     "zh": "凶恶"
   },
   "Whirlwind": {
     "scoreOverride": null,
-    "note": "通用AOE，优质群体输出，建议升级后使用，拿1张",
+    "note": "优质AOE，建议升级后使用，拿1张",
     "zh": "旋风斩"
   },
   "Abrasive": {
