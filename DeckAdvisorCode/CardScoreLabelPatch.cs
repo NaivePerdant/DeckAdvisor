@@ -9,7 +9,8 @@ namespace DeckAdvisor.DeckAdvisorCode;
 public static class CardScoreLabelPatch
 {
     const string NodeName = "_DeckAdvisorScore";
-    const float BoxW = 190f;
+    // 框宽等于卡片宽度，左右对齐卡片边框（holder 坐标系，scale=0.8）
+    const float BoxW = 300f;
     const float BoxH = 80f;
 
     static void Postfix(NCard __instance)
@@ -56,7 +57,7 @@ public static class CardScoreLabelPatch
             Name = NodeName,
             Color = gradeColor,
             Size = new Vector2(BoxW + 4, BoxH + 4),
-            Position = new Vector2((NCard.defaultSize.X - BoxW) / 2f - 2f, 250f),
+            Position = new Vector2(-2f, NCard.defaultSize.Y + 4f),  // 左对齐卡片，紧贴卡片底部
         };
         var bg = new ColorRect
         {
@@ -71,6 +72,8 @@ public static class CardScoreLabelPatch
             Size = new Vector2(BoxW - 8, BoxH - 8),
             Position = new Vector2(4, 4),
             BbcodeEnabled = false,
+            MaxFontSize = 26,
+            MinFontSize = 12,
         };
         richLabel.AddThemeColorOverride("default_color", GradeColor(result.grade));
         richLabel.SetTextAutoSize(text);
