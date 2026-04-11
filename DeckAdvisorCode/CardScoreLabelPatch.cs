@@ -43,10 +43,11 @@ public static class CardScoreLabelPatch
         var holder = __instance.GetParent() as Control;
         if (holder == null) return;
 
+        var gradeColor = GradeColor(result.grade);
         var border = new ColorRect
         {
             Name = NodeName,
-            Color = new Color(0.25f, 0.25f, 0.25f, 0.9f),
+            Color = gradeColor,
             Size = new Vector2(BoxW + 4, BoxH + 4),
             Position = new Vector2((NCard.defaultSize.X - BoxW) / 2f - 2f, 250f),
         };
@@ -58,14 +59,14 @@ public static class CardScoreLabelPatch
         };
         border.AddChild(bg);
 
-        // 用 MegaRichTextLabel 自动缩字号适应容器
         var richLabel = new MegaCrit.Sts2.addons.mega_text.MegaRichTextLabel
         {
             Size = new Vector2(BoxW - 8, BoxH - 8),
             Position = new Vector2(4, 4),
+            BbcodeEnabled = false,
         };
-        richLabel.AddThemeColorOverride("default_color", new Color(1f, 1f, 0.85f, 1f));
-        richLabel.SetTextAutoSize("[center]" + text + "[/center]");
+        richLabel.AddThemeColorOverride("default_color", GradeColor(result.grade));
+        richLabel.SetTextAutoSize(text);
         bg.AddChild(richLabel);
         holder.AddChild(border);
     }
@@ -83,4 +84,13 @@ public static class CardScoreLabelPatch
         while (p != null) { if (p.GetType().Name == typeName) return p; p = p.GetParent(); }
         return null;
     }
+
+    // 四个等级：D/F=白，C/B=蓝，A=紫，S=橙
+    static Color GradeColor(string grade) => grade switch
+    {
+        "S"           => new Color(1.0f, 0.65f, 0.0f),   // 橙
+        "A"           => new Color(0.7f, 0.4f, 1.0f),    // 紫
+        "B" or "C"    => new Color(0.4f, 0.7f, 1.0f),    // 蓝
+        _             => new Color(0.9f, 0.9f, 0.9f),    // 白
+    };
 }
