@@ -10,7 +10,7 @@ public static class CardScoreLabelPatch
 {
     const string NodeName = "_DeckAdvisorScore";
     const float BoxW = 190f;
-    const float BoxH = 64f;
+    const float BoxH = 80f;
 
     static void Postfix(NCard __instance)
     {
@@ -65,10 +65,10 @@ public static class CardScoreLabelPatch
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Top,
             AutowrapMode = TextServer.AutowrapMode.WordSmart,
-            ClipText = false,
+            ClipText = true,
         };
         label.AddThemeColorOverride("font_color", new Color(1f, 1f, 0.85f, 1f));
-        label.AddThemeFontSizeOverride("font_size", 15);
+        label.AddThemeFontSizeOverride("font_size", 13);
         label.AddThemeColorOverride("font_shadow_color", new Color(0, 0, 0, 1));
         label.AddThemeConstantOverride("shadow_offset_x", 1);
         label.AddThemeConstantOverride("shadow_offset_y", 1);
