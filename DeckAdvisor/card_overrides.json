@@ -1,6 +1,6 @@
 {
   "_config": {
-    "showScore": false,
+    "showScore": true,
     "showNote": true
   },
   "_readme": "note 为选牌建议，显示在卡牌下方。scoreOverride 填数字可覆盖算法分，null 则用算法。",

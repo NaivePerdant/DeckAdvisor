@@ -57,22 +57,16 @@ public static class CardScoreLabelPatch
             Size = new Vector2(BoxW, BoxH),
         };
         border.AddChild(bg);
-        var label = new Label
+
+        // 用 MegaRichTextLabel 自动缩字号适应容器
+        var richLabel = new MegaCrit.Sts2.addons.mega_text.MegaRichTextLabel
         {
-            Text = text,
             Size = new Vector2(BoxW - 8, BoxH - 8),
             Position = new Vector2(4, 4),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top,
-            AutowrapMode = TextServer.AutowrapMode.WordSmart,
-            ClipText = true,
         };
-        label.AddThemeColorOverride("font_color", new Color(1f, 1f, 0.85f, 1f));
-        label.AddThemeFontSizeOverride("font_size", 13);
-        label.AddThemeColorOverride("font_shadow_color", new Color(0, 0, 0, 1));
-        label.AddThemeConstantOverride("shadow_offset_x", 1);
-        label.AddThemeConstantOverride("shadow_offset_y", 1);
-        bg.AddChild(label);
+        richLabel.AddThemeColorOverride("default_color", new Color(1f, 1f, 0.85f, 1f));
+        richLabel.SetTextAutoSize("[center]" + text + "[/center]");
+        bg.AddChild(richLabel);
         holder.AddChild(border);
     }
 
