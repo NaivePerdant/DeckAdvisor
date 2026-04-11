@@ -1,6 +1,6 @@
 # DeckAdvisor
 
-《杀戮尖塔 2》Mod，在卡牌奖励和牌组构建界面为卡牌评分。
+《杀戮尖塔 2》Mod，在选牌界面（战斗奖励、商店、问号事件）为候选牌显示选牌建议。
 
 ## 前置要求
 
@@ -34,12 +34,6 @@ cp Directory.Build.props.example Directory.Build.props
 ./build.sh
 ```
 
-如果游戏路径未能自动检测：
-
-```bash
-./build.sh --sts2-path "/path/to/Slay the Spire 2"
-```
-
 **Windows：**
 
 ```bat
@@ -48,17 +42,58 @@ build.bat
 
 脚本会自动编译 `.dll`、用 Godot 导出 `.pck`，并将所有文件复制到游戏的 `mods/DeckAdvisor/` 目录。
 
-## 手动构建
+## card_overrides.json 配置说明
 
-```bash
-dotnet publish -c Release
+部署后，`mods/DeckAdvisor/card_overrides.json` 文件可以自定义每张牌的显示内容，**修改后重启游戏生效**。
+
+### 全局配置（`_config`）
+
+```json
+"_config": {
+  "showScore": false,
+  "showNote": true
+}
 ```
 
-然后将 `DeckAdvisor.dll`、`DeckAdvisor.json`、`DeckAdvisor.pck` 复制到对应目录：
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `showScore` | bool | 是否显示算法评分（等级+分数），默认 false |
+| `showNote` | bool | 是否显示选牌建议备注，默认 true |
 
-| 平台 | Mods 目录 |
-|------|-----------|
-| Windows / Linux | `<STS2>/mods/DeckAdvisor/` |
-| macOS | `<STS2>/SlayTheSpire2.app/Contents/MacOS/mods/DeckAdvisor/` |
+### 卡牌配置
 
-在游戏 Mod 列表中启用 DeckAdvisor 后重启游戏即可。
+```json
+"Offering": {
+  "zh": "祭品",
+  "scoreOverride": null,
+  "note": "无脑拿，优先升级，拿1张"
+}
+```
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `zh` | string | 卡牌中文名（只读参考，不影响功能） |
+| `scoreOverride` | number \| null | 覆盖算法基础分。`null` 使用算法计算，填数字则强制使用该分数 |
+| `note` | string | 选牌建议，显示在卡牌下方信息框。空字符串则不显示信息框 |
+
+### 备注颜色
+
+信息框颜色根据算法评级自动变化：
+
+| 评级 | 颜色 |
+|------|------|
+| S | 橙色 |
+| A | 紫色 |
+| B / C | 蓝色 |
+| D / F | 白色 |
+
+## 支持的选牌场景
+
+- 战斗后奖励选牌
+- 商店购买
+- 问号事件选牌
+
+## 文档
+
+- `docs/strategy-ironclad.md` — 铁甲战士选牌攻略汇总
+- `docs/cards-mechanics.md` — 所有卡牌效果速查表（基于反编译代码）

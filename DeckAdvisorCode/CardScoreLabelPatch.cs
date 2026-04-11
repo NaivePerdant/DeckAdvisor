@@ -14,11 +14,17 @@ public static class CardScoreLabelPatch
 
     static void Postfix(NCard __instance)
     {
-        var existing = __instance.GetParent()?.GetNodeOrNull<ColorRect>(NodeName);
-        if (existing != null) existing.GetParent().RemoveChild(existing);
-
+        // 快速退出：没有 Model 或父节点不是 Control 直接跳过
         var model = __instance.Model;
         if (model == null) return;
+
+        // 快速排除战斗手牌：父节点是 NGridCardHolder 且祖父不是选牌界面时跳过
+        // 通过检查是否已有标签来避免重复遍历
+        var parent = __instance.GetParent();
+        if (parent == null) return;
+
+        var existing = parent.GetNodeOrNull<ColorRect>(NodeName);
+        if (existing != null) existing.GetParent().RemoveChild(existing);
 
         bool inReward  = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
         bool inShop    = FindAncestorByName(__instance, "NMerchantCard") != null;
