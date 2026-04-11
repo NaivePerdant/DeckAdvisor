@@ -32,13 +32,17 @@ public static class CardScoreLabelPatch
 
         if (!CardScorer.Current.TryGetValue(model.Id, out var result)) return;
 
-        // 没有备注就不显示
-        if (string.IsNullOrEmpty(result.note)) return;
+        string? noteText  = CardOverrides.ShowNote  ? result.note : null;
+        string? scoreText = CardOverrides.ShowScore ? $"{result.grade}  {result.score:F1}" : null;
+
+        if (string.IsNullOrEmpty(noteText) && string.IsNullOrEmpty(scoreText)) return;
+
+        string text = (scoreText != null && noteText != null) ? $"{scoreText}\n{noteText}"
+                    : scoreText ?? noteText ?? "";
 
         var holder = __instance.GetParent() as Control;
         if (holder == null) return;
 
-        // 边框
         var border = new ColorRect
         {
             Name = NodeName,
@@ -46,7 +50,6 @@ public static class CardScoreLabelPatch
             Size = new Vector2(BoxW + 4, BoxH + 4),
             Position = new Vector2((NCard.defaultSize.X - BoxW) / 2f - 2f, 250f),
         };
-        // 背景
         var bg = new ColorRect
         {
             Color = new Color(0.05f, 0.05f, 0.05f, 0.93f),
@@ -54,10 +57,9 @@ public static class CardScoreLabelPatch
             Size = new Vector2(BoxW, BoxH),
         };
         border.AddChild(bg);
-        // 文字：自动换行，字号自适应内容
         var label = new Label
         {
-            Text = result.note,
+            Text = text,
             Size = new Vector2(BoxW - 8, BoxH - 8),
             Position = new Vector2(4, 4),
             HorizontalAlignment = HorizontalAlignment.Left,
@@ -71,7 +73,6 @@ public static class CardScoreLabelPatch
         label.AddThemeConstantOverride("shadow_offset_x", 1);
         label.AddThemeConstantOverride("shadow_offset_y", 1);
         bg.AddChild(label);
-
         holder.AddChild(border);
     }
 

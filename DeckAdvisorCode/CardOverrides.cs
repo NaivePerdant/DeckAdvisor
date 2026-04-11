@@ -8,6 +8,8 @@ public static class CardOverrides
     record Entry(float? ScoreOverride, string? Note);
 
     static Dictionary<string, Entry> _data = new();
+    public static bool ShowScore { get; private set; } = false;
+    public static bool ShowNote  { get; private set; } = true;
 
     public static void Load(string modDir)
     {
@@ -17,6 +19,14 @@ public static class CardOverrides
         {
             var json = System.IO.File.ReadAllText(path);
             using var doc = JsonDocument.Parse(json);
+
+            // 读取 _config
+            if (doc.RootElement.TryGetProperty("_config", out var cfg))
+            {
+                if (cfg.TryGetProperty("showScore", out var ss)) ShowScore = ss.GetBoolean();
+                if (cfg.TryGetProperty("showNote",  out var sn)) ShowNote  = sn.GetBoolean();
+            }
+
             foreach (var prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.Name.StartsWith("_")) continue;
@@ -28,7 +38,7 @@ public static class CardOverrides
                     note = nv.GetString();
                 _data[prop.Name] = new Entry(scoreOverride, note);
             }
-            MainFile.Logger.Info($"DeckAdvisor: Loaded {_data.Count} card overrides.");
+            MainFile.Logger.Info($"DeckAdvisor: Loaded {_data.Count} overrides. showScore={ShowScore} showNote={ShowNote}");
         }
         catch (Exception ex)
         {

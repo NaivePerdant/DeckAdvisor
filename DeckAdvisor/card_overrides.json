@@ -1,4 +1,8 @@
 {
+  "_config": {
+    "showScore": false,
+    "showNote": true
+  },
   "_readme": "note 为选牌建议，显示在卡牌下方。scoreOverride 填数字可覆盖算法分，null 则用算法。",
   "Aggression": {
     "zh": "好勇斗狠",
