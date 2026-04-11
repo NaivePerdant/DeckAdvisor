@@ -14,10 +14,23 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         new Harmony(ModId).PatchAll();
-        // 加载用户自定义覆盖（card_overrides.json 与 dll 同目录）
         var modDir = System.IO.Path.GetDirectoryName(
             System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "";
         CardOverrides.Load(modDir);
         Logger.Info("DeckAdvisor initialized.");
+    }
+
+    static bool _dumped = false;
+    public static void TryDumpAllCardNames()
+    {
+        if (_dumped) return;
+        _dumped = true;
+        try
+        {
+            foreach (var pool in MegaCrit.Sts2.Core.Models.ModelDb.AllCardPools)
+                foreach (var card in pool.AllCards)
+                    Logger.Info($"CARD_NAME: {card.GetType().Name}\t{card.Title}\t{pool.GetType().Name}");
+        }
+        catch (Exception ex) { Logger.Info($"DeckAdvisor: DumpAllCardNames failed: {ex.Message}"); }
     }
 }

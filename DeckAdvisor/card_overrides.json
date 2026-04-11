@@ -1,96 +1,2798 @@
 {
   "_readme": "note 为选牌建议，显示在卡牌下方。scoreOverride 填数字可覆盖算法分，null 则用算法。",
-
-  "StrikeIronclad":  { "scoreOverride": null, "note": "不要无脑删，可听劫掠/完美打击/跃跃欲试" },
-  "DefendIronclad":  { "scoreOverride": null, "note": "可被重振精神消耗，不要无脑删" },
-  "Bash":            { "scoreOverride": null, "note": "可升级为破击，升级前优先级低" },
-
-  "Offering":        { "scoreOverride": null, "note": "神卡，无脑拿，优先升级" },
-  "Stoke":           { "scoreOverride": null, "note": "无脑拿，优先升级" },
-  "PommelStrike":    { "scoreOverride": null, "note": "无脑拿，前2张必拿，配合放血可无限" },
-  "BurningPact":     { "scoreOverride": null, "note": "无脑拿，终端烧牌组件" },
-  "Bloodletting":    { "scoreOverride": null, "note": "必拿1-2张，配合剑柄打击可无限" },
-  "ShrugItOff":      { "scoreOverride": null, "note": "基本要抓，战士缺防" },
-  "BattleTrance":    { "scoreOverride": null, "note": "见到必抓" },
-  "Armaments":       { "scoreOverride": null, "note": "优先拿，白螺很多敲位" },
-  "TrueGrit":        { "scoreOverride": null, "note": "优先拿，升级后可定向消耗" },
-  "DarkEmbrace":     { "scoreOverride": null, "note": "优先拿，配合添柴/燃烧契约/重振精神" },
-  "ExpectAFight":    { "scoreOverride": null, "note": "优先拿，攻杀流加费核心" },
-  "ForgottenRitual": { "scoreOverride": null, "note": "优先拿，有消耗时+3费，可搭配真无限" },
-  "Headbutt":        { "scoreOverride": null, "note": "拿1张，可检索核心牌" },
-  "Pillage":         { "scoreOverride": null, "note": "优先拿，劫掠流核心" },
-  "SecondWind":      { "scoreOverride": null, "note": "优先拿，烧攻击牌+格挡，还能烧状态牌" },
-
-  "Rupture":         { "scoreOverride": null, "note": "自残流核心，配合放血/祭品/绯红披风" },
-  "TearAsunder":     { "scoreOverride": null, "note": "自残流终端，需配合撕裂放大伤害" },
-  "CrimsonMantle":   { "scoreOverride": null, "note": "自残流必拿，自动触发撕裂叠力量" },
-  "BloodWall":       { "scoreOverride": null, "note": "自残流可拿，配合撕裂" },
-  "Hemokinesis":     { "scoreOverride": null, "note": "自残流过渡，配合撕裂" },
-  "Breakthrough":    { "scoreOverride": null, "note": "一层无脑拿，一层后抓位下降" },
-  "Brand":           { "scoreOverride": null, "note": "0费，配合撕裂/黑暗之拥" },
-  "Inferno":         { "scoreOverride": null, "note": "配合放血/祭品触发AOE" },
-
-  "Vicious":         { "scoreOverride": null, "note": "易伤流引擎，先拿凶恶再拿易伤源" },
-  "Dominate":        { "scoreOverride": null, "note": "易伤流必拿，必须升级去消耗" },
-  "MoltenFist":      { "scoreOverride": null, "note": "配合主宰指数增长，消耗" },
-  "Bully":           { "scoreOverride": null, "note": "易伤流终端，无易伤时不拿" },
-  "Taunt":           { "scoreOverride": null, "note": "配合凶恶抽牌，易伤流必拿" },
-  "Thunderclap":     { "scoreOverride": null, "note": "配合凶恶抽牌，群体易伤" },
-  "Dismantle":       { "scoreOverride": null, "note": "易伤流优质过渡，有易伤打2次" },
-  "Colossus":        { "scoreOverride": null, "note": "需配合易伤体系才值" },
-  "Cruelty":         { "scoreOverride": null, "note": "易伤流后期补强，前期不拿" },
-  "Uppercut":        { "scoreOverride": null, "note": "战士唯一虚弱，1层可拿，有其他过渡不优先" },
-  "Tremble":         { "scoreOverride": null, "note": "配合凶恶抽牌" },
-
-  "Barricade":       { "scoreOverride": null, "note": "需配合全身撞击，升级降1费" },
-  "BodySlam":        { "scoreOverride": null, "note": "需配合壁垒，升级变0费必拿" },
-  "Impervious":      { "scoreOverride": null, "note": "战士缺防时必拿，消耗" },
-  "Unmovable":       { "scoreOverride": null, "note": "格挡流必拿，升级降1费" },
-  "EvilEye":         { "scoreOverride": null, "note": "格挡流可拿，有消耗时翻倍" },
-  "FlameBarrier":    { "scoreOverride": null, "note": "格挡+反伤，格挡流可拿" },
-  "Juggernaut":      { "scoreOverride": null, "note": "格挡流增伤，需要大量格挡才值" },
-
-  "DemonicShield":   { "scoreOverride": null, "note": "0费消耗，配合撕裂/黑暗之拥" },
-  "FeelNoPain":      { "scoreOverride": null, "note": "消耗流可拿，需要消耗体系" },
-  "Corruption":      { "scoreOverride": null, "note": "消耗流核心，3费" },
-
-  "Inflame":         { "scoreOverride": null, "note": "直接+2力量，配合多段攻击" },
-  "DemonForm":       { "scoreOverride": null, "note": "3费，长线才值，前期不拿" },
-  "SetupStrike":     { "scoreOverride": null, "note": "配合双击/旋风斩/飞剑" },
-  "Mangle":          { "scoreOverride": null, "note": "一层拿，后面不考虑" },
-  "Feed":            { "scoreOverride": null, "note": "越早拿越好，击杀永久+3血上限" },
-
-  "Pyre":            { "scoreOverride": null, "note": "长线回费，升级+2费，优先拿" },
-  "Rage":            { "scoreOverride": null, "note": "0费，攻杀流防御端，优先拿" },
-  "Aggression":      { "scoreOverride": null, "note": "每回合从弃牌堆取攻击牌并升级" },
-  "OneTwoPunch":     { "scoreOverride": null, "note": "每回合复制弃牌堆顶攻击牌" },
-  "Juggling":        { "scoreOverride": null, "note": "有0费牌时更强，配合杂耍" },
-  "Stampede":        { "scoreOverride": null, "note": "升级降1费，后期无限用" },
-  "Hellraiser":      { "scoreOverride": null, "note": "2费，后期无限用，配合劫掠" },
-  "DrumOfBattle":    { "scoreOverride": null, "note": "刚需SL防止烧核心，能接受SL才拿" },
-  "StoneArmor":      { "scoreOverride": null, "note": "覆甲递减，总格挡有限，一般不优先" },
-  "Tank":            { "scoreOverride": null, "note": "升级降1费，格挡流可拿" },
-
-  "Thrash":          { "scoreOverride": null, "note": "一层最强过渡，二层起贬值" },
-  "Whirlwind":       { "scoreOverride": null, "note": "优质AOE，建议升级后使用" },
-  "Conflagration":   { "scoreOverride": null, "note": "本回合攻击牌越多越强，抓位高" },
-  "TwinStrike":      { "scoreOverride": null, "note": "多段吃力量/易伤，配合预备打击" },
-  "SwordBoomerang":  { "scoreOverride": null, "note": "多段随机目标，吃力量加成" },
-  "Unrelenting":     { "scoreOverride": null, "note": "一层推荐，配合上勾拳/重锤" },
-  "PrimalForce":     { "scoreOverride": null, "note": "过渡舒服，后期价值下降" },
-  "FightMe":         { "scoreOverride": null, "note": "配合飞剑/双击，给敌人力量有风险" },
-  "IronWave":        { "scoreOverride": null, "note": "攻防兼备但不上不下，一般不优先" },
-  "Anger":           { "scoreOverride": null, "note": "0费，配合劫掠可拿" },
-  "Spite":           { "scoreOverride": null, "note": "0费，受伤时抽牌，自残流可拿" },
-  "Grapple":         { "scoreOverride": null, "note": "降低目标格挡获取，一般不优先" },
-  "Rampage":         { "scoreOverride": null, "note": "消耗，抓的早不错" },
-  "Bludgeon":        { "scoreOverride": null, "note": "一层强，后期太慢，二层后不拿" },
-  "HowlFromBeyond":  { "scoreOverride": null, "note": "消耗后每回合自动打出，消耗流可拿" },
-  "FiendFire":       { "scoreOverride": null, "note": "消耗流终端，消耗所有手牌×7伤" },
-  "PactsEnd":        { "scoreOverride": null, "note": "消耗流好用，消耗堆≥3张才可打" },
-  "Stomp":           { "scoreOverride": null, "note": "3费AOE，本回合攻击牌越多越强" },
-  "PerfectedStrike": { "scoreOverride": null, "note": "打击流核心，有克隆爽局可能" },
-  "Cascade":         { "scoreOverride": null, "note": "随机性强，一般不拿" },
-  "InfernalBlade":   { "scoreOverride": null, "note": "随机性强，一般不优先" },
-  "Havoc":           { "scoreOverride": null, "note": "随机烧牌，陷阱，不推荐" }
+  "Aggression": {
+    "scoreOverride": null,
+    "note": "每回合从弃牌堆取攻击牌并升级",
+    "zh": "好勇斗狠"
+  },
+  "Anger": {
+    "scoreOverride": null,
+    "note": "0费，配合劫掠可拿",
+    "zh": "愤怒"
+  },
+  "Armaments": {
+    "scoreOverride": null,
+    "note": "优先拿，白螺很多敲位",
+    "zh": "武装"
+  },
+  "AshenStrike": {
+    "zh": "灰烬打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Barricade": {
+    "scoreOverride": null,
+    "note": "需配合全身撞击，升级降1费",
+    "zh": "壁垒"
+  },
+  "Bash": {
+    "scoreOverride": null,
+    "note": "可升级为破击，升级前优先级低",
+    "zh": "痛击"
+  },
+  "BattleTrance": {
+    "scoreOverride": null,
+    "note": "见到必抓",
+    "zh": "战斗专注"
+  },
+  "BloodWall": {
+    "scoreOverride": null,
+    "note": "自残流可拿，配合撕裂",
+    "zh": "血墙"
+  },
+  "Bloodletting": {
+    "scoreOverride": null,
+    "note": "必拿1-2张，配合剑柄打击可无限",
+    "zh": "放血"
+  },
+  "Bludgeon": {
+    "scoreOverride": null,
+    "note": "一层强，后期太慢，二层后不拿",
+    "zh": "重锤"
+  },
+  "BodySlam": {
+    "scoreOverride": null,
+    "note": "需配合壁垒，升级变0费必拿",
+    "zh": "全身撞击"
+  },
+  "Brand": {
+    "scoreOverride": null,
+    "note": "0费，配合撕裂/黑暗之拥",
+    "zh": "烙印"
+  },
+  "Break": {
+    "zh": "破击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Breakthrough": {
+    "scoreOverride": null,
+    "note": "一层无脑拿，一层后抓位下降",
+    "zh": "突破"
+  },
+  "Bully": {
+    "scoreOverride": null,
+    "note": "易伤流终端，无易伤时不拿",
+    "zh": "欺凌"
+  },
+  "BurningPact": {
+    "scoreOverride": null,
+    "note": "无脑拿，终端烧牌组件",
+    "zh": "燃烧契约"
+  },
+  "Cascade": {
+    "scoreOverride": null,
+    "note": "随机性强，一般不拿",
+    "zh": "倾泻"
+  },
+  "Cinder": {
+    "zh": "余烬",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Colossus": {
+    "scoreOverride": null,
+    "note": "需配合易伤体系才值",
+    "zh": "巨像"
+  },
+  "Conflagration": {
+    "scoreOverride": null,
+    "note": "本回合攻击牌越多越强，抓位高",
+    "zh": "焚烧"
+  },
+  "Corruption": {
+    "scoreOverride": null,
+    "note": "消耗流核心，3费",
+    "zh": "腐化"
+  },
+  "CrimsonMantle": {
+    "scoreOverride": null,
+    "note": "自残流必拿，自动触发撕裂叠力量",
+    "zh": "绯红披风"
+  },
+  "Cruelty": {
+    "scoreOverride": null,
+    "note": "易伤流后期补强，前期不拿",
+    "zh": "残酷"
+  },
+  "DarkEmbrace": {
+    "scoreOverride": null,
+    "note": "优先拿，配合添柴/燃烧契约/重振精神",
+    "zh": "黑暗之拥"
+  },
+  "DefendIronclad": {
+    "scoreOverride": null,
+    "note": "可被重振精神消耗，不要无脑删",
+    "zh": "防御"
+  },
+  "DemonForm": {
+    "scoreOverride": null,
+    "note": "3费，长线才值，前期不拿",
+    "zh": "恶魔形态"
+  },
+  "DemonicShield": {
+    "scoreOverride": null,
+    "note": "0费消耗，配合撕裂/黑暗之拥",
+    "zh": "恶魔护盾"
+  },
+  "Dismantle": {
+    "scoreOverride": null,
+    "note": "易伤流优质过渡，有易伤打2次",
+    "zh": "拆卸"
+  },
+  "Dominate": {
+    "scoreOverride": null,
+    "note": "易伤流必拿，必须升级去消耗",
+    "zh": "主宰"
+  },
+  "DrumOfBattle": {
+    "scoreOverride": null,
+    "note": "刚需SL防止烧核心，能接受SL才拿",
+    "zh": "战鼓"
+  },
+  "EvilEye": {
+    "scoreOverride": null,
+    "note": "格挡流可拿，有消耗时翻倍",
+    "zh": "邪眼"
+  },
+  "ExpectAFight": {
+    "scoreOverride": null,
+    "note": "优先拿，攻杀流加费核心",
+    "zh": "跃跃欲试"
+  },
+  "Feed": {
+    "scoreOverride": null,
+    "note": "越早拿越好，击杀永久+3血上限",
+    "zh": "狂宴"
+  },
+  "FeelNoPain": {
+    "scoreOverride": null,
+    "note": "消耗流可拿，需要消耗体系",
+    "zh": "无惧疼痛"
+  },
+  "FiendFire": {
+    "scoreOverride": null,
+    "note": "消耗流终端，消耗所有手牌×7伤",
+    "zh": "恶魔之焰"
+  },
+  "FightMe": {
+    "scoreOverride": null,
+    "note": "配合飞剑/双击，给敌人力量有风险",
+    "zh": "与我一战！"
+  },
+  "FlameBarrier": {
+    "scoreOverride": null,
+    "note": "格挡+反伤，格挡流可拿",
+    "zh": "火焰屏障"
+  },
+  "ForgottenRitual": {
+    "scoreOverride": null,
+    "note": "优先拿，有消耗时+3费，可搭配真无限",
+    "zh": "被遗忘的仪式"
+  },
+  "Grapple": {
+    "scoreOverride": null,
+    "note": "降低目标格挡获取，一般不优先",
+    "zh": "擒拿"
+  },
+  "Havoc": {
+    "scoreOverride": null,
+    "note": "随机烧牌，陷阱，不推荐",
+    "zh": "破灭"
+  },
+  "Headbutt": {
+    "scoreOverride": null,
+    "note": "拿1张，可检索核心牌",
+    "zh": "头槌"
+  },
+  "Hellraiser": {
+    "scoreOverride": null,
+    "note": "2费，后期无限用，配合劫掠",
+    "zh": "地狱狂徒"
+  },
+  "Hemokinesis": {
+    "scoreOverride": null,
+    "note": "自残流过渡，配合撕裂",
+    "zh": "御血术"
+  },
+  "HowlFromBeyond": {
+    "scoreOverride": null,
+    "note": "消耗后每回合自动打出，消耗流可拿",
+    "zh": "彼岸咆哮"
+  },
+  "Impervious": {
+    "scoreOverride": null,
+    "note": "战士缺防时必拿，消耗",
+    "zh": "岿然不动"
+  },
+  "InfernalBlade": {
+    "scoreOverride": null,
+    "note": "随机性强，一般不优先",
+    "zh": "地狱之刃"
+  },
+  "Inferno": {
+    "scoreOverride": null,
+    "note": "配合放血/祭品触发AOE",
+    "zh": "狱火"
+  },
+  "Inflame": {
+    "scoreOverride": null,
+    "note": "直接+2力量，配合多段攻击",
+    "zh": "燃烧"
+  },
+  "IronWave": {
+    "scoreOverride": null,
+    "note": "攻防兼备但不上不下，一般不优先",
+    "zh": "铁斩波"
+  },
+  "Juggernaut": {
+    "scoreOverride": null,
+    "note": "格挡流增伤，需要大量格挡才值",
+    "zh": "势不可当"
+  },
+  "Juggling": {
+    "scoreOverride": null,
+    "note": "有0费牌时更强，配合杂耍",
+    "zh": "杂耍"
+  },
+  "Mangle": {
+    "scoreOverride": null,
+    "note": "一层拿，后面不考虑",
+    "zh": "凌虐"
+  },
+  "MoltenFist": {
+    "scoreOverride": null,
+    "note": "配合主宰指数增长，消耗",
+    "zh": "熔融之拳"
+  },
+  "Offering": {
+    "scoreOverride": null,
+    "note": "神卡，无脑拿，优先升级",
+    "zh": "祭品"
+  },
+  "OneTwoPunch": {
+    "scoreOverride": null,
+    "note": "每回合复制弃牌堆顶攻击牌",
+    "zh": "连环拳"
+  },
+  "PactsEnd": {
+    "scoreOverride": null,
+    "note": "消耗流好用，消耗堆≥3张才可打",
+    "zh": "契约终结"
+  },
+  "PerfectedStrike": {
+    "scoreOverride": null,
+    "note": "打击流核心，有克隆爽局可能",
+    "zh": "完美打击"
+  },
+  "Pillage": {
+    "scoreOverride": null,
+    "note": "优先拿，劫掠流核心",
+    "zh": "劫掠"
+  },
+  "PommelStrike": {
+    "scoreOverride": null,
+    "note": "无脑拿，前2张必拿，配合放血可无限",
+    "zh": "剑柄打击"
+  },
+  "PrimalForce": {
+    "scoreOverride": null,
+    "note": "过渡舒服，后期价值下降",
+    "zh": "原始力量"
+  },
+  "Pyre": {
+    "scoreOverride": null,
+    "note": "长线回费，升级+2费，优先拿",
+    "zh": "薪火之源"
+  },
+  "Rage": {
+    "scoreOverride": null,
+    "note": "0费，攻杀流防御端，优先拿",
+    "zh": "狂怒"
+  },
+  "Rampage": {
+    "scoreOverride": null,
+    "note": "消耗，抓的早不错",
+    "zh": "暴走"
+  },
+  "Rupture": {
+    "scoreOverride": null,
+    "note": "自残流核心，配合放血/祭品/绯红披风",
+    "zh": "撕裂"
+  },
+  "SecondWind": {
+    "scoreOverride": null,
+    "note": "优先拿，烧攻击牌+格挡，还能烧状态牌",
+    "zh": "重振精神"
+  },
+  "SetupStrike": {
+    "scoreOverride": null,
+    "note": "配合双击/旋风斩/飞剑",
+    "zh": "预备打击"
+  },
+  "ShrugItOff": {
+    "scoreOverride": null,
+    "note": "基本要抓，战士缺防",
+    "zh": "耸肩无视"
+  },
+  "Spite": {
+    "scoreOverride": null,
+    "note": "0费，受伤时抽牌，自残流可拿",
+    "zh": "怨恨"
+  },
+  "Stampede": {
+    "scoreOverride": null,
+    "note": "升级降1费，后期无限用",
+    "zh": "惊逃"
+  },
+  "Stoke": {
+    "scoreOverride": null,
+    "note": "无脑拿，优先升级",
+    "zh": "添柴"
+  },
+  "Stomp": {
+    "scoreOverride": null,
+    "note": "3费AOE，本回合攻击牌越多越强",
+    "zh": "踩踏"
+  },
+  "StoneArmor": {
+    "scoreOverride": null,
+    "note": "覆甲递减，总格挡有限，一般不优先",
+    "zh": "岩石铠甲"
+  },
+  "StrikeIronclad": {
+    "scoreOverride": null,
+    "note": "不要无脑删，可听劫掠/完美打击/跃跃欲试",
+    "zh": "打击"
+  },
+  "SwordBoomerang": {
+    "scoreOverride": null,
+    "note": "多段随机目标，吃力量加成",
+    "zh": "飞剑回旋镖"
+  },
+  "Tank": {
+    "scoreOverride": null,
+    "note": "升级降1费，格挡流可拿",
+    "zh": "肉盾"
+  },
+  "Taunt": {
+    "scoreOverride": null,
+    "note": "配合凶恶抽牌，易伤流必拿",
+    "zh": "挑衅"
+  },
+  "TearAsunder": {
+    "scoreOverride": null,
+    "note": "自残流终端，需配合撕裂放大伤害",
+    "zh": "扯碎"
+  },
+  "Thrash": {
+    "scoreOverride": null,
+    "note": "一层最强过渡，二层起贬值",
+    "zh": "痛殴"
+  },
+  "Thunderclap": {
+    "scoreOverride": null,
+    "note": "配合凶恶抽牌，群体易伤",
+    "zh": "闪电霹雳"
+  },
+  "Tremble": {
+    "scoreOverride": null,
+    "note": "配合凶恶抽牌",
+    "zh": "战栗"
+  },
+  "TrueGrit": {
+    "scoreOverride": null,
+    "note": "优先拿，升级后可定向消耗",
+    "zh": "坚毅"
+  },
+  "TwinStrike": {
+    "scoreOverride": null,
+    "note": "多段吃力量/易伤，配合预备打击",
+    "zh": "双重打击"
+  },
+  "Unmovable": {
+    "scoreOverride": null,
+    "note": "格挡流必拿，升级降1费",
+    "zh": "坚定不移"
+  },
+  "Unrelenting": {
+    "scoreOverride": null,
+    "note": "一层推荐，配合上勾拳/重锤",
+    "zh": "无情猛攻"
+  },
+  "Uppercut": {
+    "scoreOverride": null,
+    "note": "战士唯一虚弱，1层可拿，有其他过渡不优先",
+    "zh": "上勾拳"
+  },
+  "Vicious": {
+    "scoreOverride": null,
+    "note": "易伤流引擎，先拿凶恶再拿易伤源",
+    "zh": "凶恶"
+  },
+  "Whirlwind": {
+    "scoreOverride": null,
+    "note": "优质AOE，建议升级后使用",
+    "zh": "旋风斩"
+  },
+  "Abrasive": {
+    "zh": "磨蚀",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Accelerant": {
+    "zh": "触媒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Accuracy": {
+    "zh": "精准",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Acrobatics": {
+    "zh": "杂技",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Adrenaline": {
+    "zh": "肾上腺素",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Afterimage": {
+    "zh": "余像",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Anticipate": {
+    "zh": "预判",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Assassinate": {
+    "zh": "刺杀",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Backflip": {
+    "zh": "后空翻",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Backstab": {
+    "zh": "背刺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BladeDance": {
+    "zh": "刀刃之舞",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BladeOfInk": {
+    "zh": "墨之刃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Blur": {
+    "zh": "残影",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BouncingFlask": {
+    "zh": "弹跳药瓶",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BubbleBubble": {
+    "zh": "咕嘟冒泡",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BulletTime": {
+    "zh": "子弹时间",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Burst": {
+    "zh": "爆发",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CalculatedGamble": {
+    "zh": "计算下注",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CloakAndDagger": {
+    "zh": "斗篷与匕首",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CorrosiveWave": {
+    "zh": "腐蚀波",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DaggerSpray": {
+    "zh": "匕首雨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DaggerThrow": {
+    "zh": "投掷匕首",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Dash": {
+    "zh": "冲刺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DeadlyPoison": {
+    "zh": "致命毒药",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DefendSilent": {
+    "zh": "防御",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Deflect": {
+    "zh": "偏折",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DodgeAndRoll": {
+    "zh": "闪躲翻滚",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EchoingSlash": {
+    "zh": "回响斩击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Envenom": {
+    "zh": "涂毒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EscapePlan": {
+    "zh": "逃脱计划",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Expertise": {
+    "zh": "独门技术",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Expose": {
+    "zh": "暴露",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FanOfKnives": {
+    "zh": "刀扇",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Finisher": {
+    "zh": "终结技",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Flanking": {
+    "zh": "夹击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Flechettes": {
+    "zh": "飞镖",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FlickFlack": {
+    "zh": "翻越撑击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FollowThrough": {
+    "zh": "跟进",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Footwork": {
+    "zh": "灵动步法",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GrandFinale": {
+    "zh": "华丽收场",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HandTrick": {
+    "zh": "手上技法",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Haze": {
+    "zh": "迷雾",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HiddenDaggers": {
+    "zh": "隐秘匕首",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "InfiniteBlades": {
+    "zh": "无尽刀刃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "KnifeTrap": {
+    "zh": "刀刃陷阱",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "LeadingStrike": {
+    "zh": "先制打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "LegSweep": {
+    "zh": "扫腿",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Malaise": {
+    "zh": "萎靡",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MasterPlanner": {
+    "zh": "谋划专家",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MementoMori": {
+    "zh": "铭记死亡",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Mirage": {
+    "zh": "蜃景",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Murder": {
+    "zh": "谋杀",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Neutralize": {
+    "zh": "中和",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Nightmare": {
+    "zh": "夜魇",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NoxiousFumes": {
+    "zh": "毒雾",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Outbreak": {
+    "zh": "毒性爆发",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PhantomBlades": {
+    "zh": "幻影之刃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PiercingWail": {
+    "zh": "尖啸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Pinpoint": {
+    "zh": "精密瞄准",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PoisonedStab": {
+    "zh": "带毒刺击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Pounce": {
+    "zh": "猛扑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PreciseCut": {
+    "zh": "精确切击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Predator": {
+    "zh": "猎杀者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Prepared": {
+    "zh": "早有准备",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reflex": {
+    "zh": "本能反应",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Ricochet": {
+    "zh": "连续反弹",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SerpentForm": {
+    "zh": "群蛇形态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ShadowStep": {
+    "zh": "暗影步",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Shadowmeld": {
+    "zh": "融入暗影",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Skewer": {
+    "zh": "串刺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Slice": {
+    "zh": "切割",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Snakebite": {
+    "zh": "蛇咬",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Sneaky": {
+    "zh": "鬼祟",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Speedster": {
+    "zh": "速行者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "StormOfSteel": {
+    "zh": "钢铁风暴",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Strangle": {
+    "zh": "紧勒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "StrikeSilent": {
+    "zh": "打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SuckerPunch": {
+    "zh": "突然一拳",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Suppress": {
+    "zh": "压制",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Survivor": {
+    "zh": "生存者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Tactician": {
+    "zh": "战术大师",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheHunt": {
+    "zh": "狩猎",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ToolsOfTheTrade": {
+    "zh": "必备工具",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Tracking": {
+    "zh": "跟踪",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Untouchable": {
+    "zh": "触不可及",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "UpMySleeve": {
+    "zh": "袖里乾坤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "WellLaidPlans": {
+    "zh": "计划妥当",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "WraithForm": {
+    "zh": "幽魂形态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Alignment": {
+    "zh": "星位序列",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Arsenal": {
+    "zh": "武器库",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "AstralPulse": {
+    "zh": "星界脉冲",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BeatIntoShape": {
+    "zh": "锻打成型",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Begone": {
+    "zh": "下去！",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BigBang": {
+    "zh": "大爆炸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BlackHole": {
+    "zh": "黑洞",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Bombardment": {
+    "zh": "轰击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Bulwark": {
+    "zh": "铸墙",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BundleOfJoy": {
+    "zh": "新生之喜",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CelestialMight": {
+    "zh": "天穹之力",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Charge": {
+    "zh": "冲锋！！",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ChildOfTheStars": {
+    "zh": "群星之子",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CloakOfStars": {
+    "zh": "群星斗篷",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CollisionCourse": {
+    "zh": "碰撞轨迹",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Comet": {
+    "zh": "彗星",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Conqueror": {
+    "zh": "征服者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Convergence": {
+    "zh": "汇流",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CosmicIndifference": {
+    "zh": "宇宙冷漠",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CrashLanding": {
+    "zh": "迫降",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CrescentSpear": {
+    "zh": "新月长矛",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CrushUnder": {
+    "zh": "下砸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DecisionsDecisions": {
+    "zh": "抉择，抉择",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DefendRegent": {
+    "zh": "防御",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Devastate": {
+    "zh": "葬送",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DyingStar": {
+    "zh": "星灭",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FallingStar": {
+    "zh": "陨星",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ForegoneConclusion": {
+    "zh": "既定事项",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Furnace": {
+    "zh": "熔炉",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GammaBlast": {
+    "zh": "伽马爆破",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GatherLight": {
+    "zh": "收集光辉",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Genesis": {
+    "zh": "创世纪",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Glimmer": {
+    "zh": "微光",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Glitterstream": {
+    "zh": "流光溢彩",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Glow": {
+    "zh": "辉光",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Guards": {
+    "zh": "护驾！！！",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GuidingStar": {
+    "zh": "引导之星",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HammerTime": {
+    "zh": "锤子时间",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HeavenlyDrill": {
+    "zh": "天际钻头",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hegemony": {
+    "zh": "霸权",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HeirloomHammer": {
+    "zh": "传承之锤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HiddenCache": {
+    "zh": "隐秘藏品",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "IAmInvincible": {
+    "zh": "所向无敌",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "KinglyKick": {
+    "zh": "王者之踢",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "KinglyPunch": {
+    "zh": "王者之拳",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "KnockoutBlow": {
+    "zh": "决胜一击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "KnowThyPlace": {
+    "zh": "何人僭越",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Largesse": {
+    "zh": "慷慨捐助",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "LunarBlast": {
+    "zh": "月面射击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MakeItSo": {
+    "zh": "如此甚好",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ManifestAuthority": {
+    "zh": "君权自授",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MeteorShower": {
+    "zh": "流星雨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MonarchsGaze": {
+    "zh": "王之凝视",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Monologue": {
+    "zh": "独白",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NeutronAegis": {
+    "zh": "中子护盾",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Orbit": {
+    "zh": "环绕轨道",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PaleBlueDot": {
+    "zh": "暗淡蓝点",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Parry": {
+    "zh": "招架",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ParticleWall": {
+    "zh": "粒子墙",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Patter": {
+    "zh": "星星点点",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PhotonCut": {
+    "zh": "光子切割",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PillarOfCreation": {
+    "zh": "创世之柱",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Prophesize": {
+    "zh": "预言",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Quasar": {
+    "zh": "类星体",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Radiate": {
+    "zh": "辐射",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RefineBlade": {
+    "zh": "淬炼刀刃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reflect": {
+    "zh": "倒映",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Resonance": {
+    "zh": "共鸣",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RoyalGamble": {
+    "zh": "胜券在王",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Royalties": {
+    "zh": "王国资产",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SeekingEdge": {
+    "zh": "追踪之刃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SevenStars": {
+    "zh": "七星",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ShiningStrike": {
+    "zh": "明耀打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SolarStrike": {
+    "zh": "太阳打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SpectrumShift": {
+    "zh": "光谱偏移",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SpoilsOfBattle": {
+    "zh": "战利品",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Stardust": {
+    "zh": "星尘",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "StrikeRegent": {
+    "zh": "打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SummonForth": {
+    "zh": "征召上前",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Supermassive": {
+    "zh": "超质量体",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SwordSage": {
+    "zh": "剑圣",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Terraforming": {
+    "zh": "地形改造",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheSealedThrone": {
+    "zh": "封印王座",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheSmith": {
+    "zh": "铸剑者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Tyranny": {
+    "zh": "暴政",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Venerate": {
+    "zh": "崇拜",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "VoidForm": {
+    "zh": "虚空形态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "WroughtInWar": {
+    "zh": "战火铸就",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Afterlife": {
+    "zh": "来生",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BansheesCry": {
+    "zh": "女妖之嚎",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BlightStrike": {
+    "zh": "荒疫打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Bodyguard": {
+    "zh": "护卫",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BoneShards": {
+    "zh": "碎骨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BorrowedTime": {
+    "zh": "预借时间",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Bury": {
+    "zh": "埋葬",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Calcify": {
+    "zh": "钙化",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CallOfTheVoid": {
+    "zh": "虚空之唤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CaptureSpirit": {
+    "zh": "捕捉灵魂",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Cleanse": {
+    "zh": "洁净",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Countdown": {
+    "zh": "倒数计时",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DanseMacabre": {
+    "zh": "死亡之舞",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DeathMarch": {
+    "zh": "死亡行军",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Deathbringer": {
+    "zh": "死亡使者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DeathsDoor": {
+    "zh": "死亡之门",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Debilitate": {
+    "zh": "摧残",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DefendNecrobinder": {
+    "zh": "防御",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Defile": {
+    "zh": "玷污",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Defy": {
+    "zh": "违逆",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Delay": {
+    "zh": "拖延",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Demesne": {
+    "zh": "领域",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DevourLife": {
+    "zh": "吞噬生命",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Dirge": {
+    "zh": "挽歌",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DrainPower": {
+    "zh": "能量汲取",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Dredge": {
+    "zh": "清淤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Eidolon": {
+    "zh": "幻景",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EndOfDays": {
+    "zh": "末日降临",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EnfeeblingTouch": {
+    "zh": "弱化之触",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Eradicate": {
+    "zh": "根除",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Fear": {
+    "zh": "恐惧",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Fetch": {
+    "zh": "取回",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Flatten": {
+    "zh": "重压",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ForbiddenGrimoire": {
+    "zh": "禁忌魔典",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Friendship": {
+    "zh": "友谊",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GlimpseBeyond": {
+    "zh": "彼岸一瞥",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GraveWarden": {
+    "zh": "守墓人",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Graveblast": {
+    "zh": "坟冢爆射",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hang": {
+    "zh": "吊杀",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Haunt": {
+    "zh": "纠缠",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HighFive": {
+    "zh": "击掌",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Invoke": {
+    "zh": "唤起",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "LegionOfBone": {
+    "zh": "骸骨军团",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Lethality": {
+    "zh": "致死性",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Melancholy": {
+    "zh": "忧郁",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Misery": {
+    "zh": "苦难",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NecroMastery": {
+    "zh": "亡灵精通",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NegativePulse": {
+    "zh": "负能量脉冲",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Neurosurge": {
+    "zh": "精神过载",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NoEscape": {
+    "zh": "无处可逃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Oblivion": {
+    "zh": "湮灭",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Pagestorm": {
+    "zh": "书页风暴",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Parse": {
+    "zh": "领会",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Poke": {
+    "zh": "戳击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Protector": {
+    "zh": "守护者",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PullAggro": {
+    "zh": "吸引仇恨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PullFromBelow": {
+    "zh": "亡魂牵引",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Putrefy": {
+    "zh": "腐败",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Rattle": {
+    "zh": "猛晃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reanimate": {
+    "zh": "死者苏生",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reap": {
+    "zh": "收割",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ReaperForm": {
+    "zh": "死神形态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reave": {
+    "zh": "剥夺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RightHandHand": {
+    "zh": "得力助手",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Sacrifice": {
+    "zh": "牺牲",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Scourge": {
+    "zh": "鞭打",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SculptingStrike": {
+    "zh": "雕琢打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Seance": {
+    "zh": "降灵",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SentryMode": {
+    "zh": "哨卫模式",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Severance": {
+    "zh": "切断",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SharedFate": {
+    "zh": "命运同担",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Shroud": {
+    "zh": "厄运之衣",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SicEm": {
+    "zh": "紧追不放",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SleightOfFlesh": {
+    "zh": "血肉戏法",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Snap": {
+    "zh": "响指",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SoulStorm": {
+    "zh": "灵魂风暴",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Sow": {
+    "zh": "播种",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SpiritOfAsh": {
+    "zh": "灰烬之灵",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Spur": {
+    "zh": "增生",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Squeeze": {
+    "zh": "榨取",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "StrikeNecrobinder": {
+    "zh": "打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheScythe": {
+    "zh": "巨镰",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TimesUp": {
+    "zh": "大限已至",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Transfigure": {
+    "zh": "重构",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Undeath": {
+    "zh": "不死",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Unleash": {
+    "zh": "出击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Veilpiercer": {
+    "zh": "刺破帷幕",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Wisp": {
+    "zh": "鬼火",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "AdaptiveStrike": {
+    "zh": "适应打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "AllForOne": {
+    "zh": "万物一心",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BallLightning": {
+    "zh": "球状闪电",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Barrage": {
+    "zh": "弹幕齐射",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BeamCell": {
+    "zh": "光束射线",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BiasedCognition": {
+    "zh": "偏差认知",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BoostAway": {
+    "zh": "高速脱离",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BootSequence": {
+    "zh": "启动流程",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Buffer": {
+    "zh": "缓冲",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BulkUp": {
+    "zh": "暴涨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Capacitor": {
+    "zh": "扩容",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Chaos": {
+    "zh": "混沌",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ChargeBattery": {
+    "zh": "充电",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Chill": {
+    "zh": "冰寒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Claw": {
+    "zh": "爪击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ColdSnap": {
+    "zh": "寒流",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Compact": {
+    "zh": "压缩",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CompileDriver": {
+    "zh": "编译冲击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ConsumingShadow": {
+    "zh": "吞噬暗影",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Coolant": {
+    "zh": "冷却剂",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Coolheaded": {
+    "zh": "冷静头脑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CreativeAi": {
+    "zh": "创造性AI",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Darkness": {
+    "zh": "漆黑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DefendDefect": {
+    "zh": "防御",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Defragment": {
+    "zh": "碎片整理",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DoubleEnergy": {
+    "zh": "双倍能量",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Dualcast": {
+    "zh": "双重释放",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EchoForm": {
+    "zh": "回响形态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EnergySurge": {
+    "zh": "能量涌动",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Feral": {
+    "zh": "野性",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FightThrough": {
+    "zh": "强撑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FlakCannon": {
+    "zh": "散射炮",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FocusedStrike": {
+    "zh": "集中打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Ftl": {
+    "zh": "超越光速",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Fusion": {
+    "zh": "聚变",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GeneticAlgorithm": {
+    "zh": "遗传算法",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Glacier": {
+    "zh": "冰川",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Glasswork": {
+    "zh": "玻璃工艺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GoForTheEyes": {
+    "zh": "眼部攻击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GunkUp": {
+    "zh": "污秽攻击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hailstorm": {
+    "zh": "冰雹风暴",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HelixDrill": {
+    "zh": "螺旋钻击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hologram": {
+    "zh": "全息影像",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hotfix": {
+    "zh": "热修复",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Hyperbeam": {
+    "zh": "超能光束",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "IceLance": {
+    "zh": "冰之长枪",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Ignition": {
+    "zh": "引火",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Iteration": {
+    "zh": "迭代",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Leap": {
+    "zh": "飞跃",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "LightningRod": {
+    "zh": "引雷针",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Loop": {
+    "zh": "循环",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MachineLearning": {
+    "zh": "机器学习",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MeteorStrike": {
+    "zh": "陨石打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Modded": {
+    "zh": "模组改造",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MomentumStrike": {
+    "zh": "趁势打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MultiCast": {
+    "zh": "多重释放",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Null": {
+    "zh": "空无",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Overclock": {
+    "zh": "超频",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Quadcast": {
+    "zh": "四重释放",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Rainbow": {
+    "zh": "彩虹",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Reboot": {
+    "zh": "重启",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Refract": {
+    "zh": "折射",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RocketPunch": {
+    "zh": "火箭飞拳",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Scavenge": {
+    "zh": "再利用",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Scrape": {
+    "zh": "刮削",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ShadowShield": {
+    "zh": "暗影之盾",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Shatter": {
+    "zh": "打碎",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SignalBoost": {
+    "zh": "信号增强",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Skim": {
+    "zh": "快速检索",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Smokestack": {
+    "zh": "烟囱",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Spinner": {
+    "zh": "旋转工艺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Storm": {
+    "zh": "雷暴",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "StrikeDefect": {
+    "zh": "打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Subroutine": {
+    "zh": "子程序",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Sunder": {
+    "zh": "分离",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Supercritical": {
+    "zh": "超临界态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SweepingBeam": {
+    "zh": "扫荡射线",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Synchronize": {
+    "zh": "同步",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Synthesis": {
+    "zh": "人工合成",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Tempest": {
+    "zh": "暴风雨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TeslaCoil": {
+    "zh": "特斯拉线圈",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Thunder": {
+    "zh": "雷霆",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TrashToTreasure": {
+    "zh": "化废为宝",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Turbo": {
+    "zh": "内核加速",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Uproar": {
+    "zh": "骚动",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Voltaic": {
+    "zh": "电流相生",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "WhiteNoise": {
+    "zh": "白噪声",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Zap": {
+    "zh": "电击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Alchemize": {
+    "zh": "炼制药水",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Anointed": {
+    "zh": "天选",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Automation": {
+    "zh": "自动化",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BeaconOfHope": {
+    "zh": "希望灯塔",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BeatDown": {
+    "zh": "狠揍",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BelieveInYou": {
+    "zh": "相信着你",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Bolas": {
+    "zh": "流星锤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Calamity": {
+    "zh": "灾祸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Catastrophe": {
+    "zh": "横祸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Coordinate": {
+    "zh": "协同配合",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DarkShackles": {
+    "zh": "黑暗镣铐",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Discovery": {
+    "zh": "发现",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DramaticEntrance": {
+    "zh": "闪亮登场",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Entropy": {
+    "zh": "熵",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Equilibrium": {
+    "zh": "均衡",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "EternalArmor": {
+    "zh": "永恒铠甲",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Fasten": {
+    "zh": "勒紧",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Finesse": {
+    "zh": "妙计",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Fisticuffs": {
+    "zh": "拳斗",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FlashOfSteel": {
+    "zh": "亮剑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GangUp": {
+    "zh": "群起攻之",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "GoldAxe": {
+    "zh": "金斧",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HandOfGreed": {
+    "zh": "贪婪之手",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HiddenGem": {
+    "zh": "未掘宝石",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HuddleUp": {
+    "zh": "抱团",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Impatience": {
+    "zh": "急躁",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Intercept": {
+    "zh": "拦截",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "JackOfAllTrades": {
+    "zh": "花样百出",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Jackpot": {
+    "zh": "大奖",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Knockdown": {
+    "zh": "击倒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Lift": {
+    "zh": "托举",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MasterOfStrategy": {
+    "zh": "战略大师",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Mayhem": {
+    "zh": "乱战",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Mimic": {
+    "zh": "拟态",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MindBlast": {
+    "zh": "心灵震慑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Nostalgia": {
+    "zh": "怀旧",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Omnislice": {
+    "zh": "万向斩",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Panache": {
+    "zh": "神气制胜",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PanicButton": {
+    "zh": "应急按钮",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PrepTime": {
+    "zh": "准备时间",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Production": {
+    "zh": "生产制造",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Prolong": {
+    "zh": "延伸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Prowess": {
+    "zh": "非凡技艺",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Purity": {
+    "zh": "净化",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Rally": {
+    "zh": "集结",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Rend": {
+    "zh": "撕碎",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Restlessness": {
+    "zh": "心神不宁",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RollingBoulder": {
+    "zh": "滚石",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Salvo": {
+    "zh": "箭雨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Scrawl": {
+    "zh": "潦草急就",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SecretTechnique": {
+    "zh": "秘密技法",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SecretWeapon": {
+    "zh": "秘密武器",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SeekerStrike": {
+    "zh": "探寻打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Shockwave": {
+    "zh": "震荡波",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Splash": {
+    "zh": "飞溅",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Stratagem": {
+    "zh": "计策",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TagTeam": {
+    "zh": "双打组合",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheBomb": {
+    "zh": "炸弹",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "TheGambit": {
+    "zh": "孤注一掷",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ThinkingAhead": {
+    "zh": "深谋远虑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ThrummingHatchet": {
+    "zh": "无休手斧",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "UltimateDefend": {
+    "zh": "究极防御",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "UltimateStrike": {
+    "zh": "究极打击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Volley": {
+    "zh": "连射",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "AscendersBane": {
+    "zh": "进阶之灾",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BadLuck": {
+    "zh": "霉运",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Clumsy": {
+    "zh": "笨拙",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "CurseOfTheBell": {
+    "zh": "铃铛的诅咒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Debt": {
+    "zh": "债务",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Decay": {
+    "zh": "腐朽",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Doubt": {
+    "zh": "疑虑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Enthralled": {
+    "zh": "执迷",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Folly": {
+    "zh": "愚行",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Greed": {
+    "zh": "贪婪",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Guilty": {
+    "zh": "愧疚",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Injury": {
+    "zh": "受伤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Normality": {
+    "zh": "凡庸",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "PoorSleep": {
+    "zh": "睡眠不佳",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Regret": {
+    "zh": "悔恨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Shame": {
+    "zh": "羞耻",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "SporeMind": {
+    "zh": "孢子心灵",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Writhe": {
+    "zh": "苦恼",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Beckon": {
+    "zh": "呼唤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Burn": {
+    "zh": "灼伤",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Dazed": {
+    "zh": "晕眩",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Debris": {
+    "zh": "碎屑",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FranticEscape": {
+    "zh": "狂乱逃离",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Infection": {
+    "zh": "感染",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Slimed": {
+    "zh": "黏液",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Soot": {
+    "zh": "煤灰",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Toxic": {
+    "zh": "毒素",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Void": {
+    "zh": "虚空",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Wound": {
+    "zh": "伤口",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Apotheosis": {
+    "zh": "神化",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Apparition": {
+    "zh": "灵体",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "BrightestFlame": {
+    "zh": "至亮之焰",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ByrdSwoop": {
+    "zh": "异鸟扑击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Caltrops": {
+    "zh": "铁蒺藜",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Clash": {
+    "zh": "交锋",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Distraction": {
+    "zh": "声东击西",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "DualWield": {
+    "zh": "双持",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Enlightenment": {
+    "zh": "开悟",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Entrench": {
+    "zh": "巩固",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Exterminate": {
+    "zh": "杀灭",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "FeedingFrenzy": {
+    "zh": "疯狂进食",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "HelloWorld": {
+    "zh": "你好世界",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "MadScience": {
+    "zh": "疯狂科学",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Maul": {
+    "zh": "撕咬",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Metamorphosis": {
+    "zh": "羽化",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "NeowsFury": {
+    "zh": "涅奥之怒",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Outmaneuver": {
+    "zh": "抢占先机",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Peck": {
+    "zh": "啄击",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Rebound": {
+    "zh": "弹回",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Relax": {
+    "zh": "放松",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "RipAndTear": {
+    "zh": "狂乱撕扯",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Squash": {
+    "zh": "压扁",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Stack": {
+    "zh": "堆栈",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "ToricToughness": {
+    "zh": "坚韧之环",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Whistle": {
+    "zh": "吹哨",
+    "scoreOverride": null,
+    "note": ""
+  },
+  "Wish": {
+    "zh": "许愿",
+    "scoreOverride": null,
+    "note": ""
+  }
 }
