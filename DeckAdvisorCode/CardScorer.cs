@@ -235,12 +235,22 @@ public static class CardScorer
         var node = triggerCard.GetParent();
         while (node != null)
         {
+            // 奖励界面
             if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NCardRewardSelectionScreen screen)
             {
                 var field = screen.GetType().GetField("_options",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (field?.GetValue(screen) is IReadOnlyList<MegaCrit.Sts2.Core.Entities.Cards.CardCreationResult> options)
                     return options.Select(o => o.Card).ToList();
+                return null;
+            }
+            // 事件选牌界面
+            if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen eventScreen)
+            {
+                var field = eventScreen.GetType().GetField("_cards",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (field?.GetValue(eventScreen) is IReadOnlyList<CardModel> cards)
+                    return cards.ToList();
                 return null;
             }
             node = node.GetParent();

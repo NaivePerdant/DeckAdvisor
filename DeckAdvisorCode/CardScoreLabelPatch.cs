@@ -20,14 +20,15 @@ public static class CardScoreLabelPatch
         var model = __instance.Model;
         if (model == null) return;
 
-        bool inReward = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
-        bool inShop   = FindAncestorByName(__instance, "NMerchantCard") != null;
-        if (!inReward && !inShop) return;
+        bool inReward  = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
+        bool inShop    = FindAncestorByName(__instance, "NMerchantCard") != null;
+        bool inEvent   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen>(__instance) != null;
+        if (!inReward && !inShop && !inEvent) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
         {
-            if (inReward) CardScorer.EvaluateFromReflection(__instance);
-            else          CardScorer.EvaluateShopCard(__instance);
+            if (inReward || inEvent) CardScorer.EvaluateFromReflection(__instance);
+            else                     CardScorer.EvaluateShopCard(__instance);
         }
 
         if (!CardScorer.Current.TryGetValue(model.Id, out var result)) return;
