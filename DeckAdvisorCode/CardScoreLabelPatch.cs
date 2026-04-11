@@ -51,16 +51,15 @@ public static class CardScoreLabelPatch
         var holder = __instance.GetParent() as Control;
         if (holder == null) return;
 
-        // 调试：打印 NCard 在 holder 里的实际位置
-        MainFile.Logger.Info($"DeckAdvisor: NCard pos={__instance.Position} size={__instance.Size} holder_size={holder.Size}");
-
         var gradeColor = GradeColor(result.grade);
+        // holder 原点在卡片中心，卡片左边 X = -defaultSize.X/2
+        float cardLeft = -NCard.defaultSize.X / 2f;
         var border = new ColorRect
         {
             Name = NodeName,
             Color = gradeColor,
             Size = new Vector2(BoxW + 4, BoxH + 4),
-            Position = new Vector2(-2f, 250f),  // X对齐卡片左边，Y保持原位
+            Position = new Vector2(cardLeft - 2f, 250f),
         };
         var bg = new ColorRect
         {
