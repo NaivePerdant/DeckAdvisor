@@ -51,6 +51,9 @@ public static class CardScoreLabelPatch
         var holder = __instance.GetParent() as Control;
         if (holder == null) return;
 
+        // 调试：打印 NCard 在 holder 里的实际位置
+        MainFile.Logger.Info($"DeckAdvisor: NCard pos={__instance.Position} size={__instance.Size} holder_size={holder.Size}");
+
         var gradeColor = GradeColor(result.grade);
         var border = new ColorRect
         {
