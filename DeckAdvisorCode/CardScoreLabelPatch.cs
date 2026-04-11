@@ -57,7 +57,7 @@ public static class CardScoreLabelPatch
             Name = NodeName,
             Color = gradeColor,
             Size = new Vector2(BoxW + 4, BoxH + 4),
-            Position = new Vector2(-2f, NCard.defaultSize.Y + 4f),  // 左对齐卡片，紧贴卡片底部
+            Position = new Vector2(-2f, 250f),  // X对齐卡片左边，Y保持原位
         };
         var bg = new ColorRect
         {
