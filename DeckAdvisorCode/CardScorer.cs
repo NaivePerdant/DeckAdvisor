@@ -244,13 +244,21 @@ public static class CardScorer
                     return options.Select(o => o.Card).ToList();
                 return null;
             }
-            // 事件选牌界面
+            // 事件选牌界面（NChooseACardSelectionScreen / NSimpleCardSelectScreen）
             if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen eventScreen)
             {
                 var field = eventScreen.GetType().GetField("_cards",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (field?.GetValue(eventScreen) is IReadOnlyList<CardModel> cards)
                     return cards.ToList();
+                return null;
+            }
+            if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NSimpleCardSelectScreen simpleScreen)
+            {
+                var field = simpleScreen.GetType().GetField("_cards",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (field?.GetValue(simpleScreen) is List<CardModel> cards2)
+                    return cards2;
                 return null;
             }
             node = node.GetParent();

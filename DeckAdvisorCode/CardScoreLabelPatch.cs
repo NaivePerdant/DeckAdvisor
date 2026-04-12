@@ -29,7 +29,8 @@ public static class CardScoreLabelPatch
 
         bool inReward  = FindAncestor<NCardRewardSelectionScreen>(__instance) != null;
         bool inShop    = FindAncestorByName(__instance, "NMerchantCard") != null;
-        bool inEvent   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen>(__instance) != null;
+        bool inEvent   = FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen>(__instance) != null
+                      || FindAncestor<MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NSimpleCardSelectScreen>(__instance) != null;
         if (!inReward && !inShop && !inEvent) return;
 
         if (!CardScorer.Current.ContainsKey(model.Id))
