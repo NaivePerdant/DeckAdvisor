@@ -21,8 +21,12 @@ public static class CardScoreLabelPatch
         var parent = __instance.GetParent();
         if (parent == null) return;
 
-        // 调试：记录所有触发，帮助识别界面类型
-        MainFile.Logger.Info($"DeckAdvisor: patch card={model.GetType().Name} parent={parent.GetType().Name} grandparent={parent.GetParent()?.GetType().Name ?? "null"}");
+        // 调试：记录完整祖先链
+        var chain = new System.Text.StringBuilder();
+        var p = parent.GetParent();
+        int d = 0;
+        while (p != null && d < 10) { chain.Append(p.GetType().Name).Append(">"); p = p.GetParent(); d++; }
+        MainFile.Logger.Info($"DeckAdvisor: card={model.GetType().Name} chain={chain}");
 
         var existing = parent.GetNodeOrNull<ColorRect>(NodeName);
         if (existing != null) existing.GetParent().RemoveChild(existing);
