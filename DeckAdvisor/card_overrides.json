@@ -287,7 +287,7 @@
   "PerfectedStrike": {
     "zh": "完美打击",
     "scoreOverride": null,
-    "note": "打击流终端，牌组里有6张打击牌时才优先拿，有克隆爽局可拿1张"
+    "note": "人上人 打击流终端，牌组里有6张打击牌时才优先拿，有克隆爽局可拿1张"
   },
   "Pillage": {
     "zh": "劫掠",
@@ -2317,7 +2317,7 @@
   "HiddenGem": {
     "zh": "未掘宝石",
     "scoreOverride": null,
-    "note": ""
+    "note": "夯爆了 无脑拿，重放的效果是把一张牌重复打出，重放的牌可以被叠加重放，这张牌后续必被削，且用且珍惜"
   },
   "HuddleUp": {
     "zh": "抱团",
@@ -2342,7 +2342,7 @@
   "Jackpot": {
     "zh": "大奖",
     "scoreOverride": null,
-    "note": ""
+    "note": "夯爆了 前期商店看到必抓，升级后给的三张0费牌也一定会升级"
   },
   "Knockdown": {
     "zh": "击倒",
