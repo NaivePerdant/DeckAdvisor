@@ -2,6 +2,10 @@
 
 《杀戮尖塔 2》Mod，在选牌界面（战斗奖励、商店、问号事件）为候选牌显示选牌建议。
 
+## 效果预览
+
+![效果预览](docs/example.png)
+
 ## 前置要求
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
