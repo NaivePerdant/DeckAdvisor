@@ -244,21 +244,20 @@ public static class CardScorer
                     return options.Select(o => o.Card).ToList();
                 return null;
             }
-            // 事件选牌界面（NChooseACardSelectionScreen / NSimpleCardSelectScreen）
-            if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen eventScreen)
+            // 事件选牌界面（NChooseACardSelectionScreen / NSimpleCardSelectScreen / NDeckCardSelectScreen 等）
+            // _cards 字段在父类 NCardGridSelectionScreen 里，需要 FlattenHierarchy
+            if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NChooseACardSelectionScreen
+             || node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NSimpleCardSelectScreen
+             || node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NDeckCardSelectScreen
+             || node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NDeckUpgradeSelectScreen
+             || node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NDeckEnchantSelectScreen)
             {
-                var field = eventScreen.GetType().GetField("_cards",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (field?.GetValue(eventScreen) is IReadOnlyList<CardModel> cards)
-                    return cards.ToList();
-                return null;
-            }
-            if (node is MegaCrit.Sts2.Core.Nodes.Screens.CardSelection.NSimpleCardSelectScreen simpleScreen)
-            {
-                var field = simpleScreen.GetType().GetField("_cards",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (field?.GetValue(simpleScreen) is List<CardModel> cards2)
-                    return cards2;
+                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+                          | System.Reflection.BindingFlags.FlattenHierarchy;
+                var field = node.GetType().GetField("_cards", flags);
+                var val = field?.GetValue(node);
+                if (val is IReadOnlyList<CardModel> cards) return cards.ToList();
+                if (val is List<CardModel> cards2) return cards2;
                 return null;
             }
             node = node.GetParent();
