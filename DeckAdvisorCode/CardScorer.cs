@@ -90,13 +90,11 @@ public static class CardScorer
     {
         string name = card.GetType().Name;
 
-        // 用户覆盖优先
         if (CardOverrides.GetScoreOverride(name) is float overrideScore)
             return overrideScore;
 
         int aoeCount = deckNames.Count(n => AoeCards.Contains(n));
 
-        // 第12条联动条件
         bool hasRupture       = deckNames.Contains("Rupture");
         bool hasInferno       = deckNames.Contains("Inferno");
         bool hasTearAsunder   = deckNames.Contains("TearAsunder");
@@ -105,7 +103,7 @@ public static class CardScorer
         bool hasStrengthSource= deckNames.Any(n => StrengthSources.Contains(n));
         bool hasVulnSource    = deckNames.Any(n => VulnerableCards.Contains(n));
 
-        return CardBaseScorer.Calculate(name, aoeCount,
+        return CardBaseScorer.Calculate(card, aoeCount,
             hasRupture, hasInferno, hasTearAsunder,
             hasAshenStrike, hasFeelNoPain,
             hasStrengthSource, hasVulnSource);
